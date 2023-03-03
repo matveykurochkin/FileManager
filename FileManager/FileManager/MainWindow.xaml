@@ -9,9 +9,7 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
 
-        <Button x:Name="BackButton" Content="Back" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Height="18" Width="46" Click="BackButton_Click"/>
-        <TextBox x:Name="FirstWindowOnFileManager" HorizontalAlignment="Left" Margin="21,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="494" Height="603"/>
-        <TextBox x:Name="SecondWindowOnFileManager" HorizontalAlignment="Left" Margin="559,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="494" Height="603"/>
+        <Button x:Name="BackButton" Content="Back" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Height="32" Width="62" Click="BackButton_Click"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="1034,774,0,0" VerticalAlignment="Top"/>
         <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="979,733,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="FirstTextPath" HorizontalAlignment="Left" Margin="112,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" Height="22"/>
@@ -19,6 +17,26 @@
         <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="1000,10,0,0" VerticalAlignment="Top" Height="32" Width="53" Click="NotepadButton_Click"/>
         <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,62,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="21"/>
         <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,63,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="21"/>
+        <ListView x:Name="FirstWindowOnFileManager" Margin="21,89,569,74">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="FirstWindowOnFileManager_PreviewMouseLeftButtonDown" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <ListView x:Name="SecondWindowOnFileManager" Margin="559,89,31,74">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="NextButton" Content="Next" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Height="32" Width="62" Click="NextButton_Click"/>
 
     </Grid>
 </Window>
