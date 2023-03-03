@@ -31,12 +31,13 @@ namespace FileManager
 
         string[] Drives = Environment.GetLogicalDrives();
 
-        private string _firstFilePath = "";
-        private string _secondFilePath = "";
-        private bool isFile = false;
-        private string _currentlySelectedItemName = "";
+        private string _firstFilePath = "", _secondFilePath = "";
+        private bool isFirstWindowFile = false, isSecondWindowFile = false;
+        private string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
 
-        private void LoadFilesAndDirectories()
+        DriveInfo driveInfo;
+
+        private void LoadFilesAndDirectories(bool isFile, string filePath, string selectedItemName, ListView listView)
         {
             DirectoryInfo fileList;
             string tempFilePath = "";
@@ -45,26 +46,26 @@ namespace FileManager
             {
                 if (isFile)
                 {
-                    tempFilePath = _firstFilePath + "/" + _currentlySelectedItemName;
+                    tempFilePath = filePath + "/" + selectedItemName;
                     FileInfo fileDetails = new FileInfo(tempFilePath);
                     fileAttr = File.GetAttributes(tempFilePath);
                     Process.Start(tempFilePath);
                 }
                 else
                 {
-                    fileList = new DirectoryInfo(_firstFilePath);
+                    fileList = new DirectoryInfo(filePath);
                     FileInfo[] fileInfo = fileList.GetFiles();
                     DirectoryInfo[] directoryInfo = fileList.GetDirectories();
 
-                    FirstWindowOnFileManager.Items.Clear();
+                    listView.Items.Clear();
 
                     for (int i = 0; i < fileInfo.Length; i++)
                     {
-                        FirstWindowOnFileManager.Items.Add(fileInfo[i]);
+                        listView.Items.Add(fileInfo[i]);
                     }
                     for (int i = 0; i < directoryInfo.Length; i++)
                     {
-                        FirstWindowOnFileManager.Items.Add(directoryInfo[i]);
+                        listView.Items.Add(directoryInfo[i]);
                     }
                 }
             }
@@ -74,20 +75,53 @@ namespace FileManager
             }
         }
 
-        private void LoadButton()
+        private void removeBackSlash(TextBox textBox)
         {
-            _firstFilePath = FirstTextPath.Text;
-            LoadFilesAndDirectories();
-            isFile = false;
+            string path = textBox.Text;
+            if (path.LastIndexOf("/") == path.Length - 1)
+            {
+                textBox.Text = path.Substring(0, path.Length - 1);
+            }
+        }
+        public void goBack(bool isFile,TextBox textBox)
+        {
+            try
+            {
+                removeBackSlash(textBox);
+                string path = textBox.Text;
+                path = path.Substring(0, path.LastIndexOf("/"));
+                isFile = false;
+                textBox.Text = path;
+                removeBackSlash(textBox);
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine(ex.Message);
+            }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        private void FirstLoadButton()
         {
-            LoadFilesAndDirectories();
+            _firstFilePath = FirstTextPath.Text;
+            LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
+            isFirstWindowFile = false;
         }
-        private void NextButton_Click(object sender, RoutedEventArgs e)
+        private void SecondLoadButton()
         {
-            LoadButton();
+            _secondFilePath = SecondtTextPath.Text;
+            LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
+            isSecondWindowFile = false;
+        }
+
+        private void FirstBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            goBack(isFirstWindowFile, FirstTextPath);
+            FirstLoadButton();
+        }
+        private void SecondBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            goBack(isSecondWindowFile, SecondtTextPath);
+            SecondLoadButton();
         }
 
         private void NotepadButton_Click(object sender, RoutedEventArgs e)
@@ -105,10 +139,24 @@ namespace FileManager
                 {
                     _firstFilePath = Convert.ToString(Drives[i]);
                     FirstTextPath.Text = _firstFilePath;
+                    foreach (var drive in DriveInfo.GetDrives())
+                    {
+                        if (Drives[i] == drive.Name)
+                        {
+                            FirstFreeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
+                            FirstFormatDrive.Content = $"{drive.DriveFormat}";
+                            FirstTypeDrive.Content = $"{drive.VolumeLabel}";
+                        }
+                    }
                 }
             }
-            LoadFilesAndDirectories();
+            LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
+        }
 
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            FirstLoadButton();
+            SecondLoadButton();
         }
 
         private void SecondDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -121,16 +169,18 @@ namespace FileManager
                 {
                     _secondFilePath = Convert.ToString(Drives[i]);
                     SecondtTextPath.Text = _secondFilePath;
+                    foreach (var drive in DriveInfo.GetDrives())
+                    {
+                        if (Drives[i] == drive.Name)
+                        {
+                            SecondFreeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
+                            SecondFormatDrive.Content = $"{drive.DriveFormat}";
+                            SecondTypeDrive.Content = $"{drive.VolumeLabel}";
+                        }
+                    }
                 }
             }
-
-            DirectoryInfo fileList = new DirectoryInfo(_secondFilePath);
-            DirectoryInfo[] dirs = fileList.GetDirectories();
-
-            for (int i = 0; i < dirs.Length; i++)
-            {
-                SecondWindowOnFileManager.Items.Add(dirs[i].Name);
-            }
+            LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
         }
 
         private void FirstWindowOnFileManager_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -139,19 +189,41 @@ namespace FileManager
 
             if (item != null && item.IsSelected)
             {
-                _currentlySelectedItemName = FirstWindowOnFileManager.SelectedItem.ToString();
+                _currentlyFirstSelectedItemName = FirstWindowOnFileManager.SelectedItem.ToString();
 
-                FileAttributes fileAttr = File.GetAttributes(_firstFilePath + "/" + _currentlySelectedItemName);
+                FileAttributes fileAttr = File.GetAttributes(_firstFilePath + "/" + _currentlyFirstSelectedItemName);
 
                 if ((fileAttr & FileAttributes.Directory) == FileAttributes.Directory)
                 {
-                    isFile = false;
-                    FirstTextPath.Text += "/" + _currentlySelectedItemName;        
-                    LoadButton();
+                    isFirstWindowFile = false;
+                    FirstTextPath.Text += "/" + _currentlyFirstSelectedItemName;
+                    FirstLoadButton();
                 }
                 else
-                    isFile = true;
-                LoadFilesAndDirectories();
+                    isFirstWindowFile = true;
+                LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
+            }
+        }
+
+        private void SecondWindowOnFileManager_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+
+            if (item != null && item.IsSelected)
+            {
+                _currentlySecondSelectedItemName = SecondWindowOnFileManager.SelectedItem.ToString();
+
+                FileAttributes fileAttr = File.GetAttributes(_secondFilePath + "/" + _currentlySecondSelectedItemName);
+
+                if ((fileAttr & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    isSecondWindowFile = false;
+                    SecondtTextPath.Text += "/" + _currentlySecondSelectedItemName;
+                    SecondLoadButton();
+                }
+                else
+                    isSecondWindowFile = true;
+                LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
             }
         }
     }
