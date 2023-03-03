@@ -46,7 +46,7 @@ namespace FileManager
             {
                 if (isFile)
                 {
-                    tempFilePath = filePath + "/" + selectedItemName;
+                    tempFilePath = filePath + "\\" + selectedItemName;
                     FileInfo fileDetails = new FileInfo(tempFilePath);
                     fileAttr = File.GetAttributes(tempFilePath);
                     Process.Start(tempFilePath);
@@ -78,7 +78,7 @@ namespace FileManager
         private void removeBackSlash(TextBox textBox)
         {
             string path = textBox.Text;
-            if (path.LastIndexOf("/") == path.Length - 1)
+            if (path.LastIndexOf("\\") == path.Length - 1)
             {
                 textBox.Text = path.Substring(0, path.Length - 1);
             }
@@ -89,7 +89,7 @@ namespace FileManager
             {
                 removeBackSlash(textBox);
                 string path = textBox.Text;
-                path = path.Substring(0, path.LastIndexOf("/"));
+                path = path.Substring(0, path.LastIndexOf("\\"));
                 isFile = false;
                 textBox.Text = path;
                 removeBackSlash(textBox);
@@ -159,6 +159,12 @@ namespace FileManager
             SecondLoadButton();
         }
 
+        private void AddInFirstForm_Click(object sender, RoutedEventArgs e)
+        {
+            
+          
+        }
+
         private void SecondDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SecondWindowOnFileManager.Items.Clear();
@@ -191,12 +197,12 @@ namespace FileManager
             {
                 _currentlyFirstSelectedItemName = FirstWindowOnFileManager.SelectedItem.ToString();
 
-                FileAttributes fileAttr = File.GetAttributes(_firstFilePath + "/" + _currentlyFirstSelectedItemName);
+                FileAttributes fileAttr = File.GetAttributes(_firstFilePath + "\\" + _currentlyFirstSelectedItemName);
 
                 if ((fileAttr & FileAttributes.Directory) == FileAttributes.Directory)
                 {
                     isFirstWindowFile = false;
-                    FirstTextPath.Text += "/" + _currentlyFirstSelectedItemName;
+                    FirstTextPath.Text += "\\" + _currentlyFirstSelectedItemName;
                     FirstLoadButton();
                 }
                 else
@@ -213,12 +219,12 @@ namespace FileManager
             {
                 _currentlySecondSelectedItemName = SecondWindowOnFileManager.SelectedItem.ToString();
 
-                FileAttributes fileAttr = File.GetAttributes(_secondFilePath + "/" + _currentlySecondSelectedItemName);
+                FileAttributes fileAttr = File.GetAttributes(_secondFilePath + "\\" + _currentlySecondSelectedItemName);
 
                 if ((fileAttr & FileAttributes.Directory) == FileAttributes.Directory)
                 {
                     isSecondWindowFile = false;
-                    SecondtTextPath.Text += "/" + _currentlySecondSelectedItemName;
+                    SecondtTextPath.Text += "\\" + _currentlySecondSelectedItemName;
                     SecondLoadButton();
                 }
                 else

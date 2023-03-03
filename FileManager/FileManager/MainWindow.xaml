@@ -14,10 +14,10 @@
         <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="979,733,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="FirstTextPath" HorizontalAlignment="Left" Margin="112,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" Height="22"/>
         <TextBox x:Name="SecondtTextPath" HorizontalAlignment="Left" Margin="650,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" Height="21"/>
-        <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="1007,10,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="NotepadButton_Click"/>
+        <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="991,10,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="NotepadButton_Click"/>
         <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="21"/>
         <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="21"/>
-        <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,569,74">
+        <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,569,74" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -44,11 +44,12 @@
         <Button x:Name="SecondBackButton" Content="Back" HorizontalAlignment="Left" Margin="559,50,0,0" VerticalAlignment="Top"  Height="29" Width="62" Click="SecondBackButton_Click"/>
         <Label x:Name="FirstFreeSpace" Content="Space" HorizontalAlignment="Left" Margin="88,52,0,0" VerticalAlignment="Top" Height="28" Width="216"/>
         <Label x:Name="SecondFreeSpace" Content="Space" HorizontalAlignment="Left" Margin="626,52,0,0" VerticalAlignment="Top" Height="28" Width="216"/>
-        <Label x:Name="FirstFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="314,52,0,0" VerticalAlignment="Top" Height="29" Width="44"/>
-        <Label x:Name="SecondFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="847,52,0,0" VerticalAlignment="Top" Height="26" Width="45"/>
-        <Label x:Name="FirstTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="363,52,0,0" VerticalAlignment="Top" Height="30" Width="60"/>
-        <Label x:Name="SecondTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="892,52,0,0" VerticalAlignment="Top" Height="29" Width="63"/>
+        <Label x:Name="FirstFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="314,52,0,0" VerticalAlignment="Top" Height="29" Width="48"/>
+        <Label x:Name="SecondFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="847,52,0,0" VerticalAlignment="Top" Height="26" Width="49"/>
+        <Label x:Name="FirstTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="367,52,0,0" VerticalAlignment="Top" Height="30" Width="60"/>
+        <Label x:Name="SecondTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="901,52,0,0" VerticalAlignment="Top" Height="29" Width="63"/>
         <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="ResetButton_Click"/>
+        <Button x:Name="AddInFirstForm" Content="Add" HorizontalAlignment="Left" Margin="21,718,0,0" VerticalAlignment="Top" Click="AddInFirstForm_Click" Width="43"/>
 
     </Grid>
 </Window>
