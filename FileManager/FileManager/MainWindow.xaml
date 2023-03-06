@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:FileManager"
         mc:Ignorable="d"
         Title="File Manager" Height="800" Width="1100"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="https://cdn2.iconfinder.com/data/icons/logos-brands-4/24/logo_brand_brands_logos_total_commander-1024.png">
     <Grid>
 
         <Button x:Name="FirstBackButton" Content="Back" HorizontalAlignment="Left" Margin="21,50,0,0" VerticalAlignment="Top" Height="29" Width="62" Click="FirstBackButton_Click"/>
@@ -49,7 +50,9 @@
         <Label x:Name="FirstTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="367,52,0,0" VerticalAlignment="Top" Height="30" Width="60"/>
         <Label x:Name="SecondTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="901,52,0,0" VerticalAlignment="Top" Height="29" Width="63"/>
         <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="ResetButton_Click"/>
-        <Button x:Name="AddInFirstForm" Content="Add" HorizontalAlignment="Left" Margin="21,718,0,0" VerticalAlignment="Top" Click="AddInFirstForm_Click" Width="43"/>
-
+        <Button x:Name="AddFolderInFirstWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="21,698,0,0" VerticalAlignment="Top" Click="AddFolderInFirstWindow_Click" Width="65" Height="24"/>
+        <Button x:Name="AddFolderInSecondWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="559,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="AddFolderInSecondWindow_Click"/>
+        <Button x:Name="RemoveButtonOnFirstWindow" Content="Remove" HorizontalAlignment="Left" Margin="91,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="RemoveButtonOnFirstWindow_Click"/>
+        <Button x:Name="RemoveButtonOnSecondWindow" Content="Remove" HorizontalAlignment="Left" Margin="629,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="RemoveButtonOnSecondWindow_Click"/>
     </Grid>
 </Window>

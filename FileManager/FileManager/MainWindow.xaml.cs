@@ -34,8 +34,7 @@ namespace FileManager
         private string _firstFilePath = "", _secondFilePath = "";
         private bool isFirstWindowFile = false, isSecondWindowFile = false;
         private string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
-
-        DriveInfo driveInfo;
+        DirectoryInfo directory;
 
         private void LoadFilesAndDirectories(bool isFile, string filePath, string selectedItemName, ListView listView)
         {
@@ -100,13 +99,14 @@ namespace FileManager
             }
         }
 
-        private void FirstLoadButton()
+
+        private void FirstLoadUpdate()
         {
             _firstFilePath = FirstTextPath.Text;
             LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
             isFirstWindowFile = false;
         }
-        private void SecondLoadButton()
+        private void SecondLoadUpdate()
         {
             _secondFilePath = SecondtTextPath.Text;
             LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
@@ -116,12 +116,12 @@ namespace FileManager
         private void FirstBackButton_Click(object sender, RoutedEventArgs e)
         {
             goBack(isFirstWindowFile, FirstTextPath);
-            FirstLoadButton();
+            FirstLoadUpdate();
         }
         private void SecondBackButton_Click(object sender, RoutedEventArgs e)
         {
             goBack(isSecondWindowFile, SecondtTextPath);
-            SecondLoadButton();
+            SecondLoadUpdate();
         }
 
         private void NotepadButton_Click(object sender, RoutedEventArgs e)
@@ -155,14 +155,46 @@ namespace FileManager
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            FirstLoadButton();
-            SecondLoadButton();
+            FirstLoadUpdate();
+            SecondLoadUpdate();
         }
 
-        private void AddInFirstForm_Click(object sender, RoutedEventArgs e)
+        private void AddFolderInFirstWindow_Click(object sender, RoutedEventArgs e)
         {
-            
-          
+            string pathString = System.IO.Path.Combine(_firstFilePath, "New Folder");
+            Directory.CreateDirectory(pathString);
+            FirstLoadUpdate();
+        }
+
+        private void AddFolderInSecondWindow_Click(object sender, RoutedEventArgs e)
+        {
+            string pathString = System.IO.Path.Combine(_secondFilePath, "New Folder");
+            Directory.CreateDirectory(pathString);
+            SecondLoadUpdate();
+        }
+
+        private void RemoveButtonOnFirstWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Внимание: программа удалит папку в которой вы находитесь и все ее содержимое!", "Warning", MessageBoxButton.YesNo,MessageBoxImage.Stop);
+            if (result == MessageBoxResult.Yes)
+            {
+                Directory.Delete(_firstFilePath, true);
+                FirstWindowOnFileManager.Items.Remove(FirstWindowOnFileManager.SelectedItem);
+            }
+            goBack(isFirstWindowFile, FirstTextPath);
+            FirstLoadUpdate();
+        }
+
+        private void RemoveButtonOnSecondWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Внимание: программа удалит папку в которой вы находитесь и все ее содержимое!", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
+            if (result == MessageBoxResult.Yes)
+            {
+                Directory.Delete(_secondFilePath, true);
+                SecondWindowOnFileManager.Items.Remove(SecondWindowOnFileManager.SelectedItem);
+            }
+            goBack(isSecondWindowFile, SecondtTextPath);
+            SecondLoadUpdate();
         }
 
         private void SecondDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -203,7 +235,7 @@ namespace FileManager
                 {
                     isFirstWindowFile = false;
                     FirstTextPath.Text += "\\" + _currentlyFirstSelectedItemName;
-                    FirstLoadButton();
+                    FirstLoadUpdate();
                 }
                 else
                     isFirstWindowFile = true;
@@ -225,7 +257,7 @@ namespace FileManager
                 {
                     isSecondWindowFile = false;
                     SecondtTextPath.Text += "\\" + _currentlySecondSelectedItemName;
-                    SecondLoadButton();
+                    SecondLoadUpdate();
                 }
                 else
                     isSecondWindowFile = true;
