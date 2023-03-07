@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileManager.Include;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -30,113 +31,33 @@ namespace FileManager
         }
 
         string[] Drives = Environment.GetLogicalDrives();
-
         private string _firstFilePath = "", _secondFilePath = "";
         private bool isFirstWindowFile = false, isSecondWindowFile = false;
         private string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
 
-        private void CopyPath(string path)
-        {
-            Clipboard.SetText($"{path}");
-        }
-
-        private void Remove(string path, ListView listView, TextBox textBox, bool isFirstFile)
-        {
-            var result = MessageBox.Show("Внимание: программа удалит папку в которой вы находитесь и все ее содержимое!", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
-            if (result == MessageBoxResult.Yes)
-            {
-                Directory.Delete(path, true);
-                listView.Items.Remove(listView.SelectedItem);
-            }
-            goBack(isFirstFile, textBox);
-        }
-
-        private void LoadFilesAndDirectories(bool isFile, string filePath, string selectedItemName, ListView listView)
-        {
-            DirectoryInfo fileList;
-            string tempFilePath = "";
-            FileAttributes fileAttr;
-            try
-            {
-                if (isFile)
-                {
-                    tempFilePath = filePath + "\\" + selectedItemName;
-                    FileInfo fileDetails = new FileInfo(tempFilePath);
-                    fileAttr = File.GetAttributes(tempFilePath);
-                    Process.Start(tempFilePath);
-                }
-                else
-                {
-                    fileList = new DirectoryInfo(filePath);
-                    FileInfo[] fileInfo = fileList.GetFiles();
-                    DirectoryInfo[] directoryInfo = fileList.GetDirectories();
-
-                    listView.Items.Clear();
-
-                    for (int i = 0; i < directoryInfo.Length; i++)
-                    {
-                        listView.Items.Add(directoryInfo[i]);
-                    }
-
-                    for (int i = 0; i < fileInfo.Length; i++)
-                    {
-                        listView.Items.Add(fileInfo[i]);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        private void removeBackSlash(TextBox textBox)
-        {
-            string path = textBox.Text;
-            if (path.LastIndexOf("\\") == path.Length - 1)
-            {
-                textBox.Text = path.Substring(0, path.Length - 1);
-            }
-        }
-        public void goBack(bool isFile, TextBox textBox)
-        {
-            try
-            {
-                removeBackSlash(textBox);
-                string path = textBox.Text;
-                path = path.Substring(0, path.LastIndexOf("\\"));
-                isFile = false;
-                textBox.Text = path;
-                removeBackSlash(textBox);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-
         private void FirstLoadUpdate()
         {
             _firstFilePath = FirstTextPath.Text;
-            LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
+            Function.LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
             isFirstWindowFile = false;
         }
+
         private void SecondLoadUpdate()
         {
             _secondFilePath = SecondtTextPath.Text;
-            LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
+            Function.LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
             isSecondWindowFile = false;
         }
 
         private void FirstBackButton_Click(object sender, RoutedEventArgs e)
         {
-            goBack(isFirstWindowFile, FirstTextPath);
+            Function.goBack(isFirstWindowFile, FirstTextPath);
             FirstLoadUpdate();
         }
+
         private void SecondBackButton_Click(object sender, RoutedEventArgs e)
         {
-            goBack(isSecondWindowFile, SecondtTextPath);
+            Function.goBack(isSecondWindowFile, SecondtTextPath);
             SecondLoadUpdate();
         }
 
@@ -145,108 +66,53 @@ namespace FileManager
             Process OpenNotepad = Process.Start("notepad.exe");
         }
 
-        private string ViewDirectoryAndFileOnWindow(bool isWindowFile, string path, string selectedItemName,ListView listView, ComboBox comboBox, Label freeSpace, Label formatDrive, Label typeDrive)
-        {
-            listView.Items.Clear();
-
-            for (int i = 0; i < Drives.Length; i++)
-            {
-                if (comboBox.SelectedItem == Drives[i])
-                {
-
-                    path = Convert.ToString(Drives[i]);
-
-                    foreach (var drive in DriveInfo.GetDrives())
-                    {
-                        if (Drives[i] == drive.Name)
-                        {
-                            freeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
-                            formatDrive.Content = $"{drive.DriveFormat}";
-                            typeDrive.Content = $"{drive.VolumeLabel}";
-                        }
-                    }
-                }
-            }
-
-            LoadFilesAndDirectories(isWindowFile, path, selectedItemName, listView);
-            path = path.Trim(new[] { '\\' });
-            FirstTextPath.Text = path;
-            return path;
-        }
-
         private void FirstDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           _firstFilePath = ViewDirectoryAndFileOnWindow(isFirstWindowFile,_firstFilePath,_currentlyFirstSelectedItemName, FirstWindowOnFileManager,FirstDiskList,FirstFreeSpace,FirstFormatDrive,FirstTypeDrive);
+            _firstFilePath = Function.ViewDirectoryAndFileOnWindow(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstDiskList, FirstTextPath, FirstFreeSpace, FirstFormatDrive, FirstTypeDrive);
         }
 
         private void SecondDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SecondWindowOnFileManager.Items.Clear();
-
-            for (int i = 0; i < Drives.Length; i++)
-            {
-                if (SecondDiskList.SelectedItem == Drives[i])
-                {
-                    _secondFilePath = Convert.ToString(Drives[i]);
-
-                    foreach (var drive in DriveInfo.GetDrives())
-                    {
-                        if (Drives[i] == drive.Name)
-                        {
-                            SecondFreeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
-                            SecondFormatDrive.Content = $"{drive.DriveFormat}";
-                            SecondTypeDrive.Content = $"{drive.VolumeLabel}";
-                        }
-                    }
-                }
-            }
-            LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
-            _secondFilePath = _secondFilePath.Trim(new[] { '\\' });
-            SecondtTextPath.Text = _secondFilePath;
+            _secondFilePath = Function.ViewDirectoryAndFileOnWindow(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondDiskList, SecondtTextPath, SecondFreeSpace, SecondFormatDrive, SecondTypeDrive);
         }
+
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             FirstLoadUpdate();
             SecondLoadUpdate();
         }
 
-        private void AddFolder(string path)
-        {
-            string pathString = System.IO.Path.Combine(path, "New Folder");
-            Directory.CreateDirectory(pathString);
-        }
-
         private void AddFolderInFirstWindow_Click(object sender, RoutedEventArgs e)
         {
-            AddFolder(_firstFilePath);
+            Function.AddFolder(_firstFilePath);
             FirstLoadUpdate();
         }
 
         private void AddFolderInSecondWindow_Click(object sender, RoutedEventArgs e)
         {
-            AddFolder(_secondFilePath);
+            Function.AddFolder(_secondFilePath);
             SecondLoadUpdate();
         }
 
         private void RemoveButtonOnFirstWindow_Click(object sender, RoutedEventArgs e)
         {
-            Remove(_firstFilePath, FirstWindowOnFileManager, FirstTextPath, isFirstWindowFile);
+            Function.Remove(_firstFilePath, FirstWindowOnFileManager, FirstTextPath, isFirstWindowFile);
             FirstLoadUpdate();
         }
 
         private void RemoveButtonOnSecondWindow_Click(object sender, RoutedEventArgs e)
         {
-            Remove(_secondFilePath, SecondWindowOnFileManager, SecondtTextPath, isSecondWindowFile);
+            Function.Remove(_secondFilePath, SecondWindowOnFileManager, SecondtTextPath, isSecondWindowFile);
             SecondLoadUpdate();
         }
 
         private void CopyFirstPathButton_Click(object sender, RoutedEventArgs e)
         {
-            CopyPath(_firstFilePath);
+            Function.CopyPath(_firstFilePath);
         }
         private void CopySecondPathButton_Click(object sender, RoutedEventArgs e)
         {
-            CopyPath(_secondFilePath);
+            Function.CopyPath(_secondFilePath);
         }
 
         private void FirstCopyButton_Click(object sender, RoutedEventArgs e)
@@ -272,7 +138,7 @@ namespace FileManager
                 }
                 else
                     isFirstWindowFile = true;
-                LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
+                Function.LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
             }
         }
 
@@ -294,7 +160,7 @@ namespace FileManager
                 }
                 else
                     isSecondWindowFile = true;
-                LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
+                Function.LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
             }
         }
     }
