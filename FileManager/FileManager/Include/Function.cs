@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,7 +9,7 @@ namespace FileManager.Include
 {
     public static class Function
     {
-         static string[] Drives = Environment.GetLogicalDrives();
+        static string[] Drives = Environment.GetLogicalDrives();
         public static void CopyPath(string path)
         {
             Clipboard.SetText($"{path}");
@@ -79,7 +80,6 @@ namespace FileManager.Include
             textBox.Text = path;
             return path;
         }
-
         public static void LoadFilesAndDirectories(bool isFile, string filePath, string selectedItemName, ListView listView)
         {
             DirectoryInfo fileList;
@@ -103,14 +103,11 @@ namespace FileManager.Include
                     listView.Items.Clear();
 
                     for (int i = 0; i < directoryInfo.Length; i++)
-                    {
                         listView.Items.Add(directoryInfo[i]);
-                    }
+
 
                     for (int i = 0; i < fileInfo.Length; i++)
-                    {
                         listView.Items.Add(fileInfo[i]);
-                    }
                 }
             }
             catch (Exception ex)
@@ -120,8 +117,33 @@ namespace FileManager.Include
         }
         public static void AddFolder(string path)
         {
-            string pathString = System.IO.Path.Combine(path, "New Folder");
-            Directory.CreateDirectory(pathString);
+            try
+            {
+                string pathString = Path.Combine(path, "New Folder");
+                Directory.CreateDirectory(pathString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public static void AddFile(string path)
+        {
+            try
+            {
+                if (File.Exists($"{path}\\FileManager.txt"))
+                    File.Delete($"{path}\\FileManager.txt");
+
+                FileStream fileStream = File.Create($"{path}\\FileManager.txt");
+                byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
+                fileStream.Write(info, 0, info.Length);
+                fileStream.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
