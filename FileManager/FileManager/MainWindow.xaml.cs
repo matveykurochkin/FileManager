@@ -34,7 +34,22 @@ namespace FileManager
         private string _firstFilePath = "", _secondFilePath = "";
         private bool isFirstWindowFile = false, isSecondWindowFile = false;
         private string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
-        DirectoryInfo directory;
+
+        private void CopyPath(string path)
+        {
+            Clipboard.SetText($"{path}");
+        }
+
+        private void Remove(string path, ListView listView, TextBox textBox, bool isFirstFile)
+        {
+            var result = MessageBox.Show("Внимание: программа удалит папку в которой вы находитесь и все ее содержимое!", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
+            if (result == MessageBoxResult.Yes)
+            {
+                Directory.Delete(path, true);
+                listView.Items.Remove(listView.SelectedItem);
+            }
+            goBack(isFirstFile, textBox);
+        }
 
         private void LoadFilesAndDirectories(bool isFile, string filePath, string selectedItemName, ListView listView)
         {
@@ -58,13 +73,14 @@ namespace FileManager
 
                     listView.Items.Clear();
 
-                    for (int i = 0; i < fileInfo.Length; i++)
-                    {
-                        listView.Items.Add(fileInfo[i]);
-                    }
                     for (int i = 0; i < directoryInfo.Length; i++)
                     {
                         listView.Items.Add(directoryInfo[i]);
+                    }
+
+                    for (int i = 0; i < fileInfo.Length; i++)
+                    {
+                        listView.Items.Add(fileInfo[i]);
                     }
                 }
             }
@@ -82,7 +98,7 @@ namespace FileManager
                 textBox.Text = path.Substring(0, path.Length - 1);
             }
         }
-        public void goBack(bool isFile,TextBox textBox)
+        public void goBack(bool isFile, TextBox textBox)
         {
             try
             {
@@ -95,7 +111,7 @@ namespace FileManager
             }
             catch (Exception ex)
             {
-               Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -129,72 +145,38 @@ namespace FileManager
             Process OpenNotepad = Process.Start("notepad.exe");
         }
 
-        private void FirstDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private string ViewDirectoryAndFileOnWindow(bool isWindowFile, string path, string selectedItemName,ListView listView, ComboBox comboBox, Label freeSpace, Label formatDrive, Label typeDrive)
         {
-            FirstWindowOnFileManager.Items.Clear();
+            listView.Items.Clear();
 
             for (int i = 0; i < Drives.Length; i++)
             {
-                if (FirstDiskList.SelectedItem == Drives[i])
+                if (comboBox.SelectedItem == Drives[i])
                 {
-                    _firstFilePath = Convert.ToString(Drives[i]);
-                    FirstTextPath.Text = _firstFilePath;
+
+                    path = Convert.ToString(Drives[i]);
+
                     foreach (var drive in DriveInfo.GetDrives())
                     {
                         if (Drives[i] == drive.Name)
                         {
-                            FirstFreeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
-                            FirstFormatDrive.Content = $"{drive.DriveFormat}";
-                            FirstTypeDrive.Content = $"{drive.VolumeLabel}";
+                            freeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
+                            formatDrive.Content = $"{drive.DriveFormat}";
+                            typeDrive.Content = $"{drive.VolumeLabel}";
                         }
                     }
                 }
             }
-            LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
+
+            LoadFilesAndDirectories(isWindowFile, path, selectedItemName, listView);
+            path = path.Trim(new[] { '\\' });
+            FirstTextPath.Text = path;
+            return path;
         }
 
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        private void FirstDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FirstLoadUpdate();
-            SecondLoadUpdate();
-        }
-
-        private void AddFolderInFirstWindow_Click(object sender, RoutedEventArgs e)
-        {
-            string pathString = System.IO.Path.Combine(_firstFilePath, "New Folder");
-            Directory.CreateDirectory(pathString);
-            FirstLoadUpdate();
-        }
-
-        private void AddFolderInSecondWindow_Click(object sender, RoutedEventArgs e)
-        {
-            string pathString = System.IO.Path.Combine(_secondFilePath, "New Folder");
-            Directory.CreateDirectory(pathString);
-            SecondLoadUpdate();
-        }
-
-        private void RemoveButtonOnFirstWindow_Click(object sender, RoutedEventArgs e)
-        {
-            var result = MessageBox.Show("Внимание: программа удалит папку в которой вы находитесь и все ее содержимое!", "Warning", MessageBoxButton.YesNo,MessageBoxImage.Stop);
-            if (result == MessageBoxResult.Yes)
-            {
-                Directory.Delete(_firstFilePath, true);
-                FirstWindowOnFileManager.Items.Remove(FirstWindowOnFileManager.SelectedItem);
-            }
-            goBack(isFirstWindowFile, FirstTextPath);
-            FirstLoadUpdate();
-        }
-
-        private void RemoveButtonOnSecondWindow_Click(object sender, RoutedEventArgs e)
-        {
-            var result = MessageBox.Show("Внимание: программа удалит папку в которой вы находитесь и все ее содержимое!", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
-            if (result == MessageBoxResult.Yes)
-            {
-                Directory.Delete(_secondFilePath, true);
-                SecondWindowOnFileManager.Items.Remove(SecondWindowOnFileManager.SelectedItem);
-            }
-            goBack(isSecondWindowFile, SecondtTextPath);
-            SecondLoadUpdate();
+           _firstFilePath = ViewDirectoryAndFileOnWindow(isFirstWindowFile,_firstFilePath,_currentlyFirstSelectedItemName, FirstWindowOnFileManager,FirstDiskList,FirstFreeSpace,FirstFormatDrive,FirstTypeDrive);
         }
 
         private void SecondDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -206,7 +188,7 @@ namespace FileManager
                 if (SecondDiskList.SelectedItem == Drives[i])
                 {
                     _secondFilePath = Convert.ToString(Drives[i]);
-                    SecondtTextPath.Text = _secondFilePath;
+
                     foreach (var drive in DriveInfo.GetDrives())
                     {
                         if (Drives[i] == drive.Name)
@@ -219,6 +201,57 @@ namespace FileManager
                 }
             }
             LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
+            _secondFilePath = _secondFilePath.Trim(new[] { '\\' });
+            SecondtTextPath.Text = _secondFilePath;
+        }
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            FirstLoadUpdate();
+            SecondLoadUpdate();
+        }
+
+        private void AddFolder(string path)
+        {
+            string pathString = System.IO.Path.Combine(path, "New Folder");
+            Directory.CreateDirectory(pathString);
+        }
+
+        private void AddFolderInFirstWindow_Click(object sender, RoutedEventArgs e)
+        {
+            AddFolder(_firstFilePath);
+            FirstLoadUpdate();
+        }
+
+        private void AddFolderInSecondWindow_Click(object sender, RoutedEventArgs e)
+        {
+            AddFolder(_secondFilePath);
+            SecondLoadUpdate();
+        }
+
+        private void RemoveButtonOnFirstWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Remove(_firstFilePath, FirstWindowOnFileManager, FirstTextPath, isFirstWindowFile);
+            FirstLoadUpdate();
+        }
+
+        private void RemoveButtonOnSecondWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Remove(_secondFilePath, SecondWindowOnFileManager, SecondtTextPath, isSecondWindowFile);
+            SecondLoadUpdate();
+        }
+
+        private void CopyFirstPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            CopyPath(_firstFilePath);
+        }
+        private void CopySecondPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            CopyPath(_secondFilePath);
+        }
+
+        private void FirstCopyButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void FirstWindowOnFileManager_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
