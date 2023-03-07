@@ -1,20 +1,10 @@
 ﻿using FileManager.Include;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FileManager
 {
@@ -113,6 +103,23 @@ namespace FileManager
         private void CopySecondPathButton_Click(object sender, RoutedEventArgs e)
         {
             Function.CopyPath(_secondFilePath);
+        }
+
+        private void CreateFileInFirstWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            Function.AddFile(_firstFilePath);
+            FirstLoadUpdate();
+        }
+
+        private void CreateFileInSecondWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            Function.AddFile(_secondFilePath);
+            SecondLoadUpdate();
+        }
+
+        private void OpenInCMDFirstWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("cmd.exe");
         }
 
         private void FirstCopyButton_Click(object sender, RoutedEventArgs e)
