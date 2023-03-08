@@ -18,7 +18,7 @@
         <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="991,10,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="NotepadButton_Click"/>
         <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="21"/>
         <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="21"/>
-        <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,569,74" >
+        <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,569,74" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name"></GridViewColumn>
@@ -30,7 +30,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <ListView x:Name="SecondWindowOnFileManager" Margin="559,110,31,74">
+        <ListView x:Name="SecondWindowOnFileManager" Margin="559,110,31,74" MouseRightButtonDown="SecondWindowOnFileManager_MouseRightButtonDown">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name"></GridViewColumn>

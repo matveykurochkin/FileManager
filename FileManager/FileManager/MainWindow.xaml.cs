@@ -21,10 +21,9 @@ namespace FileManager
         }
 
         string[] Drives = Environment.GetLogicalDrives();
-        private string _firstFilePath = "", _secondFilePath = "";
+        public string _firstFilePath = "", _secondFilePath = "";
         private bool isFirstWindowFile = false, isSecondWindowFile = false;
         private string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
-
         private void FirstLoadUpdate()
         {
             _firstFilePath = FirstTextPath.Text;
@@ -169,6 +168,15 @@ namespace FileManager
                     isSecondWindowFile = true;
                 Function.LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
             }
+        }
+
+        private void FirstWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Function.CreationMenuView(_firstFilePath,FirstTextPath);
+        }
+        private void SecondWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Function.CreationMenuView(_secondFilePath, SecondtTextPath);
         }
     }
 }
