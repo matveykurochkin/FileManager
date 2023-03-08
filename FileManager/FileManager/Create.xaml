@@ -1,0 +1,19 @@
+﻿<Window x:Class="FileManager.Create"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileManager"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Creation Menu" Height="200" Width="300"
+        Icon="https://cdn2.iconfinder.com/data/icons/logos-brands-4/24/logo_brand_brands_logos_total_commander-1024.png">
+    <Grid>
+        <TextBox x:Name="NameOfFileOrFolder" Margin="10,32,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" FontSize="14"/>
+        <Button x:Name="AddFolderButton" Content="Add Folder" Margin="10,62,0,0" Click="AddFolderButton_Click" HorizontalAlignment="Left" Width="75" Height="30" VerticalAlignment="Top"/>
+        <Button x:Name="AddFileButton" Content="Add File" Margin="0,62,10,0" Click="AddFileButton_Click" HorizontalAlignment="Right" Width="75" Height="30" VerticalAlignment="Top"/>
+        <Label x:Name="LabelName" Content="Enter Name" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" Margin="0,5,0,0"/>
+        <Button x:Name="AddWordDocumentButton" Content="MS Word File" Margin="0,97,10,0" RenderTransformOrigin="0.107,0.368" Click="AddWordDocumentButton_Click" HorizontalAlignment="Right" Width="75" Height="30" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
