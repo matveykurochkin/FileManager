@@ -14,6 +14,8 @@ namespace FileManager.Include
         {
             Clipboard.SetText($"{path}");
         }
+        public static string MSWord = "docx";
+        public static string pathOnTCWindow = "";
 
         public static void removeBackSlash(TextBox textBox)
         {
@@ -128,6 +130,19 @@ namespace FileManager.Include
             }
         }
 
+        public static void AddFolder(string path, string folderName)
+        {
+            try
+            {
+                string pathString = Path.Combine(path, folderName);
+                Directory.CreateDirectory(pathString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         public static void AddFile(string path)
         {
             try
@@ -143,6 +158,48 @@ namespace FileManager.Include
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        public static void AddFile(string path, string fileName)
+        {
+            try
+            {
+                if (File.Exists($"{path}\\{fileName}.txt"))
+                    File.Delete($"{path}\\{fileName}.txt");
+
+                FileStream fileStream = File.Create($"{path}\\{fileName}.txt");
+                byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
+                fileStream.Write(info, 0, info.Length);
+                fileStream.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public static void AddFile(string path, string fileName, string fileType)
+        {
+            try
+            {
+                if (File.Exists($"{path}\\{fileName}.{fileType}"))
+                    File.Delete($"{path}\\{fileName}.{fileType}");
+
+                FileStream fileStream = File.Create($"{path}\\{fileName}.{fileType}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public static void CreationMenuView(string path, TextBox textBox)
+        {
+            if (textBox.Text != "")
+            {
+                Create create = new Create();
+                pathOnTCWindow = path;
+                create.Show();
             }
         }
     }
