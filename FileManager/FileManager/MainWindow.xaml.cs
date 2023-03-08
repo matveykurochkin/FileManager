@@ -123,7 +123,9 @@ namespace FileManager
 
         private void FirstCopyButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Function.CopyFileAndDerictories(_firstFilePath,_secondFilePath);
+            FirstLoadUpdate();
+            SecondLoadUpdate();
         }
 
         private void FirstWindowOnFileManager_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

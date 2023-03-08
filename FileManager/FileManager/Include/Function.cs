@@ -9,6 +9,8 @@ namespace FileManager.Include
 {
     public static class Function
     {
+        
+
         static string[] Drives = Environment.GetLogicalDrives();
         public static void CopyPath(string path)
         {
@@ -200,6 +202,33 @@ namespace FileManager.Include
                 Create create = new Create();
                 pathOnTCWindow = path;
                 create.Show();
+            }
+        }
+
+        public static void CopyFileAndDerictories(string sourcePath, string targetPath)
+        {
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                try
+                {
+                    Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            {
+                try
+                {
+                    File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }
