@@ -1,4 +1,5 @@
 ﻿using FileManager.Include;
+using NLog;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,6 +20,8 @@ namespace FileManager
                 SecondDiskList.Items.Add(disk);
             }
         }
+
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         string[] Drives = Environment.GetLogicalDrives();
         public string _firstFilePath = "", _secondFilePath = "";

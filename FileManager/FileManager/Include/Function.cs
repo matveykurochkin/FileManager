@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -9,13 +10,14 @@ namespace FileManager.Include
 {
     public static class Function
     {
-        
-
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         static string[] Drives = Environment.GetLogicalDrives();
         public static void CopyPath(string path)
         {
             Clipboard.SetText($"{path}");
+            _logger.Info("Command copy path to buffer success!");
         }
+
         public static string MSWord = "docx";
         public static string pathOnTCWindow = "";
 
@@ -23,9 +25,7 @@ namespace FileManager.Include
         {
             string path = textBox.Text;
             if (path.LastIndexOf("\\") == path.Length - 1)
-            {
                 textBox.Text = path.Substring(0, path.Length - 1);
-            }
         }
 
         public static void goBack(bool isFile, TextBox textBox)
@@ -52,8 +52,11 @@ namespace FileManager.Include
             {
                 Directory.Delete(path, true);
                 listView.Items.Remove(listView.SelectedItem);
+                goBack(isFile, textBox);
+                _logger.Info("Delete folder success");
             }
-            goBack(isFile, textBox);
+            else
+                _logger.Info("Folder not deleted");
         }
 
         public static string ViewDirectoryAndFileOnWindow(bool isWindowFile, string path, string selectedItemName, ListView listView, ComboBox comboBox, TextBox textBox, Label freeSpace, Label formatDrive, Label typeDrive)
@@ -82,6 +85,7 @@ namespace FileManager.Include
             LoadFilesAndDirectories(isWindowFile, path, selectedItemName, listView);
             path = path.Trim(new[] { '\\' });
             textBox.Text = path;
+            _logger.Info("Files and Directories view successfully");
             return path;
         }
         public static void LoadFilesAndDirectories(bool isFile, string filePath, string selectedItemName, ListView listView)
@@ -117,6 +121,7 @@ namespace FileManager.Include
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                _logger.Error("Files and Directories not uploaded");
             }
         }
         public static void AddFolder(string path)
@@ -125,10 +130,12 @@ namespace FileManager.Include
             {
                 string pathString = Path.Combine(path, "New Folder");
                 Directory.CreateDirectory(pathString);
+                _logger.Info("Folder create successfully");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                _logger.Error("Folder create not successfully");
             }
         }
 
@@ -138,10 +145,12 @@ namespace FileManager.Include
             {
                 string pathString = Path.Combine(path, folderName);
                 Directory.CreateDirectory(pathString);
+                _logger.Info("Folder create successfully");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                _logger.Error("Folder create not successfully");
             }
         }
 
@@ -156,10 +165,12 @@ namespace FileManager.Include
                 byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
                 fileStream.Write(info, 0, info.Length);
                 fileStream.Close();
+                _logger.Info("File create successfully");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                _logger.Error("File create not successfully");
             }
         }
 
@@ -174,10 +185,12 @@ namespace FileManager.Include
                 byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
                 fileStream.Write(info, 0, info.Length);
                 fileStream.Close();
+                _logger.Info("File create successfully");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                _logger.Error("File create not successfully");
             }
         }
 
@@ -189,10 +202,12 @@ namespace FileManager.Include
                     File.Delete($"{path}\\{fileName}.{fileType}");
 
                 FileStream fileStream = File.Create($"{path}\\{fileName}.{fileType}");
+                _logger.Info("File create successfully");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                _logger.Error("File create not successfully");
             }
         }
         public static void CreationMenuView(string path, TextBox textBox)
@@ -202,7 +217,9 @@ namespace FileManager.Include
                 Create create = new Create();
                 pathOnTCWindow = path;
                 create.Show();
+                _logger.Info("Creation Menu loaded");
             }
+            _logger.Info("Creation Menu not loaded");
         }
 
         public static void CopyFileAndDerictories(string sourcePath, string targetPath)
@@ -211,11 +228,12 @@ namespace FileManager.Include
             {
                 try
                 {
-                    Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+                    Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));                   
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    _logger.Error("File and Directories copy not successfully");
                 }
             }
 
@@ -228,8 +246,10 @@ namespace FileManager.Include
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    _logger.Error("File and Directories copy not successfully");
                 }
             }
+            _logger.Info("File and Directories copy successfully");
         }
     }
 }
