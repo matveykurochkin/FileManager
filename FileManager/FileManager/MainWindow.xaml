@@ -13,9 +13,9 @@
         <Button x:Name="FirstBackButton" Content="Back" HorizontalAlignment="Left" Margin="21,50,0,0" VerticalAlignment="Top" Height="29" Width="62" Click="FirstBackButton_Click"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="1034,774,0,0" VerticalAlignment="Top"/>
         <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="979,733,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="FirstTextPath" HorizontalAlignment="Left" Margin="112,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="348" Height="22"/>
-        <TextBox x:Name="SecondtTextPath" HorizontalAlignment="Left" Margin="650,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="348" Height="21"/>
-        <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="991,10,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="NotepadButton_Click"/>
+        <TextBox x:Name="FirstTextPath" HorizontalAlignment="Left" Margin="112,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="348" Height="22" KeyDown="EnterKeyDownOnFirstPath"/>
+        <TextBox x:Name="SecondtTextPath" HorizontalAlignment="Left" Margin="650,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="348" Height="21" KeyDown="EnterKeyDownOnSecondPath"/>
+        <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="924,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="NotepadButton_Click"/>
         <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="21"/>
         <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="21"/>
         <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,569,74" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" >
@@ -27,6 +27,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="PreviewMouseLeftButtonDown" Handler="FirstWindowOnFileManager_PreviewMouseLeftButtonDown" />
+                    <Setter Property="Foreground" Value="Black"></Setter>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
@@ -39,6 +40,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="PreviewMouseLeftButtonDown" Handler="SecondWindowOnFileManager_PreviewMouseLeftButtonDown" />
+                    <Setter Property="Foreground" Value="Black"></Setter>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
@@ -49,16 +51,18 @@
         <Label x:Name="SecondFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="847,52,0,0" VerticalAlignment="Top" Height="26" Width="49"/>
         <Label x:Name="FirstTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="367,52,0,0" VerticalAlignment="Top" Height="30" Width="60"/>
         <Label x:Name="SecondTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="901,52,0,0" VerticalAlignment="Top" Height="29" Width="63"/>
-        <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="ResetButton_Click"/>
+        <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="89,15,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="ResetButton_Click"/>
         <Button x:Name="AddFolderInFirstWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="21,698,0,0" VerticalAlignment="Top" Click="AddFolderInFirstWindow_Click" Width="65" Height="24"/>
         <Button x:Name="AddFolderInSecondWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="559,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="AddFolderInSecondWindow_Click"/>
         <Button x:Name="RemoveButtonOnFirstWindow" Content="Remove" HorizontalAlignment="Left" Margin="160,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="RemoveButtonOnFirstWindow_Click"/>
         <Button x:Name="RemoveButtonOnSecondWindow" Content="Remove" HorizontalAlignment="Left" Margin="698,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="RemoveButtonOnSecondWindow_Click"/>
         <Button x:Name="CopyFirstPathButton" Content="Copy" HorizontalAlignment="Left" Margin="465,83,0,0" VerticalAlignment="Top" Width="50" Height="22" Click="CopyFirstPathButton_Click"/>
         <Button x:Name="CopySecondPathButton" Content="Copy" HorizontalAlignment="Left" Margin="1003,82,0,0" VerticalAlignment="Top" Width="50" Height="22" Click="CopySecondPathButton_Click"/>
-        <Button x:Name="FirstCopyButton" Content="Copy" HorizontalAlignment="Left" Margin="519,142,0,0" VerticalAlignment="Top"  Width="35" Height="33" Click="FirstCopyButton_Click"/>
+        <Button x:Name="CopyButton" Content="Copy" HorizontalAlignment="Left" Margin="519,142,0,0" VerticalAlignment="Top"  Width="35" Height="33" Click="CopyButton_Click"/>
         <Button x:Name="CreateFileInFirstWindowButton" Content="New File" HorizontalAlignment="Left" Margin="91,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="CreateFileInFirstWindowButton_Click"/>
         <Button x:Name="CreateFileInSecondWindowButton" Content="New File" HorizontalAlignment="Left" Margin="629,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="CreateFileInSecondWindowButton_Click"/>
-        <Button x:Name="OpenInCMDFirstWindow" Content="CMD" HorizontalAlignment="Left" Margin="922,10,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="OpenInCMDFirstWindow_Click"/>
+        <Button x:Name="OpenInCMDFirstWindow" Content="CMD" HorizontalAlignment="Left" Margin="857,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="OpenInCMDFirstWindow_Click"/>
+        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="22,15,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="UpdateButton_Click"/>
+        <Button x:Name="HelpButton" Content="Help" HorizontalAlignment="Left" Margin="991,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="HelpButton_Click"/>
     </Grid>
 </Window>

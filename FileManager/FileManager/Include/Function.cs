@@ -18,6 +18,29 @@ namespace FileManager.Include
             _logger.Info("Command copy path to buffer success!");
         }
 
+        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.1" +
+            "\nСоздание папок и файлов: " +
+            "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
+            "\n\tДля создания файла по умолчанию требуется перейти в нужный каталог и нажать кнопку New File!" +
+            "\n\tДля создания папки или файла с собственным именем нажать ПКМ и в окне ввести название!" +
+            "\nКопирование папок:" +
+            "\n\tДля копирования папки необходимо в левом окне выбрать папку, необходимую для копирования, а в правом окне папку, в которую нужно скопировать данные, после нажать кнопку Copy!" +
+            "\nУдаление папок:" +
+            "\n\tДля удаления папок необходимо зайти в папку которую нужно удалить и нажать кнопку Remove, после чего папка и все ее содержимое безвозвратно удалится!" +
+            "\nОбновление данных:" +
+            "\n\tЕсли файлы были добавлены через другое приложение или с помощью Creation Menu, то следует нажать кнопку Update после любого из действий!" +
+            "\nСброс всех окон и их данных:" +
+            "\n\tЧтобы сбросить все окна до состояния по умолчанию, необходимо нажать кнопку Reset!" +
+            "\nКопирование пути:" +
+            "\n\tДля того, чтобы скопировать путь необходимо перейти в нужный каталог и нажать кнопку Copy в зависимости от того, в каком окне вы находитесь!" +
+            "\nДля перехода по скопированному пути:" +
+            "\n\tДля того, чтобы перейти по скопированному пути, нужно вставить путь в одно из полей, где располагается путь и нажать Enter!" +
+            "\nОткрытие Блокнота:" +
+            "\n\tДля того, чтобы откыть блокнот, необходимо нажать кнопку Notepad!" +
+            "\nДля открытия CMD:" +
+            "\n\tДля того, чтобы открыть CMD, необходимо нажать кнопку CMD!" +
+            "\nФайловый менеджер предоставляет информацию о памяти текущего диска, его файловой системы и названия, также показывает скрытые папки!";
+
         public static string MSWord = "docx";
         public static string pathOnTCWindow = "";
 
@@ -120,8 +143,7 @@ namespace FileManager.Include
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                _logger.Error("Files and Directories not uploaded");
+                _logger.Error($"Files and Directories not uploaded. Error message: {ex.Message}");
             }
         }
         public static void AddFolder(string path)
@@ -129,13 +151,23 @@ namespace FileManager.Include
             try
             {
                 string pathString = Path.Combine(path, "New Folder");
+                if (Directory.Exists(pathString))
+                {                  
+                    var result = MessageBox.Show("Папка с таким названием уже существует, заменить ее?",
+                        "Информация",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+                    if (result == MessageBoxResult.Yes)
+                        Directory.Delete(pathString,true);
+                    else
+                        return;
+                }             
                 Directory.CreateDirectory(pathString);
                 _logger.Info("Folder create successfully");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                _logger.Error("Folder create not successfully");
+                _logger.Error($"Folder create not successfully. Error message: {ex.Message}");
             }
         }
 
@@ -144,13 +176,23 @@ namespace FileManager.Include
             try
             {
                 string pathString = Path.Combine(path, folderName);
+                if (Directory.Exists(pathString))
+                {
+                    var result = MessageBox.Show("Папка с таким названием уже существует, заменить ее?",
+                        "Информация",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+                    if (result == MessageBoxResult.Yes)
+                        Directory.Delete(pathString,true);
+                    else
+                        return;
+                }
                 Directory.CreateDirectory(pathString);
                 _logger.Info("Folder create successfully");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                _logger.Error("Folder create not successfully");
+                _logger.Error($"Folder create not successfully. Error message: {ex.Message}");
             }
         }
 
@@ -159,7 +201,16 @@ namespace FileManager.Include
             try
             {
                 if (File.Exists($"{path}\\FileManager.txt"))
-                    File.Delete($"{path}\\FileManager.txt");
+                {
+                    var result = MessageBox.Show("Файл с таким названием уже существует, заменить его?",
+                        "Информация",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+                    if (result == MessageBoxResult.Yes)
+                        File.Delete($"{path}\\FileManager.txt");
+                    else
+                        return;
+                }
 
                 FileStream fileStream = File.Create($"{path}\\FileManager.txt");
                 byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
@@ -179,7 +230,16 @@ namespace FileManager.Include
             try
             {
                 if (File.Exists($"{path}\\{fileName}.txt"))
-                    File.Delete($"{path}\\{fileName}.txt");
+                {
+                    var result = MessageBox.Show("Файл с таким названием уже существует, заменить его?",
+                        "Информация",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+                    if (result == MessageBoxResult.Yes)
+                        File.Delete($"{path}\\{fileName}.txt");
+                    else
+                        return;
+                }
 
                 FileStream fileStream = File.Create($"{path}\\{fileName}.txt");
                 byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
@@ -199,7 +259,16 @@ namespace FileManager.Include
             try
             {
                 if (File.Exists($"{path}\\{fileName}.{fileType}"))
-                    File.Delete($"{path}\\{fileName}.{fileType}");
+                {
+                    var result = MessageBox.Show("Файл с таким названием уже существует, заменить его?",
+                        "Информация",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+                    if (result == MessageBoxResult.Yes)
+                        File.Delete($"{path}\\{fileName}.{fileType}");
+                    else
+                        return;
+                }
 
                 FileStream fileStream = File.Create($"{path}\\{fileName}.{fileType}");
                 _logger.Info("File create successfully");
@@ -228,7 +297,7 @@ namespace FileManager.Include
             {
                 try
                 {
-                    Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));                   
+                    Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
                 }
                 catch (Exception ex)
                 {
@@ -250,6 +319,14 @@ namespace FileManager.Include
                 }
             }
             _logger.Info("File and Directories copy successfully");
+        }
+
+        public static string LoadUpdate(bool isFile, string path, string selectedItemName, ListView listView, TextBox textBox)
+        {
+            path = textBox.Text;
+            LoadFilesAndDirectories(isFile, path, selectedItemName, listView);
+            isFile = false;
+            return path;
         }
     }
 }
