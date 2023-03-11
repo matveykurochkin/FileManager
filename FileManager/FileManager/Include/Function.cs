@@ -145,6 +145,7 @@ namespace FileManager.Include
             {
                 _logger.Error($"Files and Directories not uploaded. Error message: {ex.Message}");
             }
+            listView.Items.Refresh();
         }
         public static void AddFolder(string path)
         {

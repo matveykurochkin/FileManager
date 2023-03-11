@@ -9,10 +9,9 @@ namespace FileManager
         {
             InitializeComponent();
         }
-
+        MainWindow mainWindow = new MainWindow();
         private void AddFolderButton_Click(object sender, RoutedEventArgs e)
         {
-
             if (NameOfFileOrFolder.Text != "")
             {
                 Function.AddFolder(Function.pathOnTCWindow, NameOfFileOrFolder.Text);

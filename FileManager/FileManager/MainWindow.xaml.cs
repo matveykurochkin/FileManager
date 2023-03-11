@@ -25,9 +25,9 @@ namespace FileManager
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         string[] Drives = Environment.GetLogicalDrives();
-        public string _firstFilePath = "", _secondFilePath = "";
-        private bool isFirstWindowFile = false, isSecondWindowFile = false;
-        private string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
+        public  string _firstFilePath = "", _secondFilePath = "";
+        public  bool isFirstWindowFile = false, isSecondWindowFile = false;
+        public  string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
         public void Reset()
         {
             FirstDiskList.Items.Clear();
@@ -39,6 +39,9 @@ namespace FileManager
             }
             FirstWindowOnFileManager.Items.Clear();
             SecondWindowOnFileManager.Items.Clear();
+            FirstFreeSpace.Content = SecondFreeSpace.Content = "Space";
+            FirstFormatDrive.Content = SecondFormatDrive.Content = "Format";
+            FirstTypeDrive.Content = SecondTypeDrive.Content = "Name";
             FirstTextPath.Text = SecondtTextPath.Text = "";
             _firstFilePath = Function.LoadUpdate(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             _secondFilePath = Function.LoadUpdate(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
@@ -178,8 +181,39 @@ namespace FileManager
                     else
                         isFirstWindowFile = true;
                     Function.LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
+                    FirstWindowOnFileManager.UnselectAll();
                 }
                 _logger.Info($"Open next folder on first window, path: {_firstFilePath}");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Open next filder error. Error message: {ex.Message}");
+            }
+        }
+        private void SecondWindowOnFileManager_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+
+            try
+            {
+                if (item != null && item.IsSelected)
+                {
+                    _currentlySecondSelectedItemName = SecondWindowOnFileManager.SelectedItem.ToString();
+
+                    FileAttributes fileAttr = File.GetAttributes(_secondFilePath + "\\" + _currentlySecondSelectedItemName);
+
+                    if ((fileAttr & FileAttributes.Directory) == FileAttributes.Directory)
+                    {
+                        isSecondWindowFile = false;
+                        SecondtTextPath.Text += "\\" + _currentlySecondSelectedItemName;
+                        _secondFilePath = Function.LoadUpdate(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
+                    }
+                    else
+                        isSecondWindowFile = true;
+                    Function.LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
+                    SecondWindowOnFileManager.UnselectAll();
+                }
+                _logger.Info($"Open next folder on second window, path: {_secondFilePath}");
             }
             catch (Exception ex)
             {
@@ -242,36 +276,6 @@ namespace FileManager
             fileStream.Close();
 
             Process.Start("notepad.exe", path);
-        }
-
-        private void SecondWindowOnFileManager_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as ListViewItem;
-
-            try
-            {
-                if (item != null && item.IsSelected)
-                {
-                    _currentlySecondSelectedItemName = SecondWindowOnFileManager.SelectedItem.ToString();
-
-                    FileAttributes fileAttr = File.GetAttributes(_secondFilePath + "\\" + _currentlySecondSelectedItemName);
-
-                    if ((fileAttr & FileAttributes.Directory) == FileAttributes.Directory)
-                    {
-                        isSecondWindowFile = false;
-                        SecondtTextPath.Text += "\\" + _currentlySecondSelectedItemName;
-                        _secondFilePath = Function.LoadUpdate(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
-                    }
-                    else
-                        isSecondWindowFile = true;
-                    Function.LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
-                }
-                _logger.Info($"Open next folder on second window, path: {_secondFilePath}");
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Open next filder error. Error message: {ex.Message}");
-            }
         }
 
         private void FirstWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
