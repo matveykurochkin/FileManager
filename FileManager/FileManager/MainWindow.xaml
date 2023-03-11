@@ -5,11 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileManager"
         mc:Ignorable="d"
-        Title="File Manager" Height="800" Width="1100"
+        Title="File Manager (x64) v0.2" Height="800" Width="1100"
         WindowStartupLocation="CenterScreen"
-        Icon="https://cdn2.iconfinder.com/data/icons/logos-brands-4/24/logo_brand_brands_logos_total_commander-1024.png">
+        Icon="FileManagerLogo.ico">
     <Grid>
-
         <Button x:Name="FirstBackButton" Content="Back" HorizontalAlignment="Left" Margin="21,50,0,0" VerticalAlignment="Top" Height="29" Width="62" Click="FirstBackButton_Click"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="1034,774,0,0" VerticalAlignment="Top"/>
         <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="979,733,0,0" VerticalAlignment="Top" MouseLeftButtonDown="ExitLabel_MouseLeftButtonDown"/>
@@ -58,11 +57,12 @@
         <Button x:Name="RemoveButtonOnSecondWindow" Content="Remove" HorizontalAlignment="Left" Margin="698,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="RemoveButtonOnSecondWindow_Click"/>
         <Button x:Name="CopyFirstPathButton" Content="Copy" HorizontalAlignment="Left" Margin="465,83,0,0" VerticalAlignment="Top" Width="50" Height="22" Click="CopyFirstPathButton_Click"/>
         <Button x:Name="CopySecondPathButton" Content="Copy" HorizontalAlignment="Left" Margin="1003,82,0,0" VerticalAlignment="Top" Width="50" Height="22" Click="CopySecondPathButton_Click"/>
-        <Button x:Name="CopyButton" Content="Copy" HorizontalAlignment="Left" Margin="519,142,0,0" VerticalAlignment="Top"  Width="35" Height="33" Click="CopyButton_Click"/>
+        <Button x:Name="CopyButton" Content="Copy" HorizontalAlignment="Left" Margin="519,328,0,0" VerticalAlignment="Top"  Width="35" Height="33" Click="CopyButton_Click"/>
         <Button x:Name="CreateFileInFirstWindowButton" Content="New File" HorizontalAlignment="Left" Margin="91,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="CreateFileInFirstWindowButton_Click"/>
         <Button x:Name="CreateFileInSecondWindowButton" Content="New File" HorizontalAlignment="Left" Margin="629,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="CreateFileInSecondWindowButton_Click"/>
         <Button x:Name="OpenInCMDFirstWindow" Content="CMD" HorizontalAlignment="Left" Margin="857,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="OpenInCMDFirstWindow_Click"/>
         <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="22,15,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="UpdateButton_Click"/>
         <Button x:Name="HelpButton" Content="Help" HorizontalAlignment="Left" Margin="991,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="HelpButton_Click"/>
+        
     </Grid>
 </Window>
