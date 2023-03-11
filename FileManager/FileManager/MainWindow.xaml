@@ -12,7 +12,7 @@
 
         <Button x:Name="FirstBackButton" Content="Back" HorizontalAlignment="Left" Margin="21,50,0,0" VerticalAlignment="Top" Height="29" Width="62" Click="FirstBackButton_Click"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="1034,774,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="979,733,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="979,733,0,0" VerticalAlignment="Top" MouseLeftButtonDown="ExitLabel_MouseLeftButtonDown"/>
         <TextBox x:Name="FirstTextPath" HorizontalAlignment="Left" Margin="112,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="348" Height="22" KeyDown="EnterKeyDownOnFirstPath"/>
         <TextBox x:Name="SecondtTextPath" HorizontalAlignment="Left" Margin="650,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="348" Height="21" KeyDown="EnterKeyDownOnSecondPath"/>
         <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="924,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="NotepadButton_Click"/>

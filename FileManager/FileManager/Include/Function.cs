@@ -18,7 +18,7 @@ namespace FileManager.Include
             _logger.Info("Command copy path to buffer success!");
         }
 
-        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.1" +
+        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.2" +
             "\nСоздание папок и файлов: " +
             "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
             "\n\tДля создания файла по умолчанию требуется перейти в нужный каталог и нажать кнопку New File!" +
@@ -41,7 +41,7 @@ namespace FileManager.Include
             "\n\tДля того, чтобы открыть CMD, необходимо нажать кнопку CMD!" +
             "\nФайловый менеджер предоставляет информацию о памяти текущего диска, его файловой системы и названия, также показывает скрытые папки!";
 
-        public static string MSWord = "docx";
+        public static string MSWord = "docx", MSPP = "ppt";
         public static string pathOnTCWindow = "", selectedonTCItemName = "";
         public static bool isFileTCwindow;
         static ListView listViewOnTC = new ListView();
@@ -155,16 +155,16 @@ namespace FileManager.Include
             {
                 string pathString = Path.Combine(path, "New Folder");
                 if (Directory.Exists(pathString))
-                {                  
+                {
                     var result = MessageBox.Show("Папка с таким названием уже существует, заменить ее?",
                         "Информация",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
-                        Directory.Delete(pathString,true);
+                        Directory.Delete(pathString, true);
                     else
                         return;
-                }             
+                }
                 Directory.CreateDirectory(pathString);
                 _logger.Info("Folder create successfully");
             }
@@ -186,12 +186,12 @@ namespace FileManager.Include
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
-                        Directory.Delete(pathString,true);
+                        Directory.Delete(pathString, true);
                     else
                         return;
                 }
                 Directory.CreateDirectory(pathString);
-                LoadUpdate(isFileTCwindow,pathOnTCWindow,selectedonTCItemName, listViewOnTC,textBoxOnTC);
+                LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
                 _logger.Info("Folder create successfully");
             }
             catch (Exception ex)
@@ -220,7 +220,7 @@ namespace FileManager.Include
                 byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
                 fileStream.Write(info, 0, info.Length);
                 fileStream.Close();
-                _logger.Info("File create successfully");
+                _logger.Info($"File create successfully. File name: FileManager.txt");
             }
             catch (Exception ex)
             {
@@ -250,7 +250,7 @@ namespace FileManager.Include
                 fileStream.Write(info, 0, info.Length);
                 fileStream.Close();
                 LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
-                _logger.Info("File create successfully");
+                _logger.Info($"File create successfully. File name: {fileName}.txt");
             }
             catch (Exception ex)
             {
@@ -274,10 +274,9 @@ namespace FileManager.Include
                     else
                         return;
                 }
-
                 FileStream fileStream = File.Create($"{path}\\{fileName}.{fileType}");
                 LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
-                _logger.Info("File create successfully");
+                _logger.Info($"File create successfully. File name: {fileName}.{fileType}");
             }
             catch (Exception ex)
             {
@@ -285,7 +284,7 @@ namespace FileManager.Include
                 _logger.Error("File create not successfully");
             }
         }
-        public static void CreationMenuView(bool isFile, string path, string selectedItemName,ListView listView, TextBox textBox)
+        public static void CreationMenuView(bool isFile, string path, string selectedItemName, ListView listView, TextBox textBox)
         {
             if (textBox.Text != "")
             {
@@ -298,8 +297,9 @@ namespace FileManager.Include
                 create.Show();
                 _logger.Info("Creation Menu loaded");
             }
-            _logger.Info("Creation Menu not loaded");
-        }      
+            else
+                _logger.Error("Creation Menu not loaded");
+        }
         public static void CopyFileAndDerictories(string sourcePath, string targetPath)
         {
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
@@ -310,8 +310,7 @@ namespace FileManager.Include
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    _logger.Error("File and Directories copy not successfully");
+                    _logger.Error($"File and Directories copy not successfully. Error message: {ex.Message}");
                 }
             }
 
@@ -323,8 +322,7 @@ namespace FileManager.Include
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    _logger.Error("File and Directories copy not successfully");
+                    _logger.Error($"File and Directories copy not successfully. Error message: {ex.Message}");
                 }
             }
             _logger.Info("File and Directories copy successfully");
