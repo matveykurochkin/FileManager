@@ -42,8 +42,10 @@ namespace FileManager.Include
             "\nФайловый менеджер предоставляет информацию о памяти текущего диска, его файловой системы и названия, также показывает скрытые папки!";
 
         public static string MSWord = "docx";
-        public static string pathOnTCWindow = "";
-
+        public static string pathOnTCWindow = "", selectedonTCItemName = "";
+        public static bool isFileTCwindow;
+        static ListView listViewOnTC = new ListView();
+        static TextBox textBoxOnTC = new TextBox();
         public static void removeBackSlash(TextBox textBox)
         {
             string path = textBox.Text;
@@ -189,6 +191,7 @@ namespace FileManager.Include
                         return;
                 }
                 Directory.CreateDirectory(pathString);
+                LoadUpdate(isFileTCwindow,pathOnTCWindow,selectedonTCItemName, listViewOnTC,textBoxOnTC);
                 _logger.Info("Folder create successfully");
             }
             catch (Exception ex)
@@ -246,6 +249,7 @@ namespace FileManager.Include
                 byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
                 fileStream.Write(info, 0, info.Length);
                 fileStream.Close();
+                LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
                 _logger.Info("File create successfully");
             }
             catch (Exception ex)
@@ -272,6 +276,7 @@ namespace FileManager.Include
                 }
 
                 FileStream fileStream = File.Create($"{path}\\{fileName}.{fileType}");
+                LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
                 _logger.Info("File create successfully");
             }
             catch (Exception ex)
@@ -280,18 +285,21 @@ namespace FileManager.Include
                 _logger.Error("File create not successfully");
             }
         }
-        public static void CreationMenuView(string path, TextBox textBox)
+        public static void CreationMenuView(bool isFile, string path, string selectedItemName,ListView listView, TextBox textBox)
         {
             if (textBox.Text != "")
             {
                 Create create = new Create();
                 pathOnTCWindow = path;
+                selectedonTCItemName = selectedItemName;
+                isFileTCwindow = isFile;
+                listViewOnTC = listView;
+                textBoxOnTC = textBox;
                 create.Show();
                 _logger.Info("Creation Menu loaded");
             }
             _logger.Info("Creation Menu not loaded");
-        }
-
+        }      
         public static void CopyFileAndDerictories(string sourcePath, string targetPath)
         {
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))

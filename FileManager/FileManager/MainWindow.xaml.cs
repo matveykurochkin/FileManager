@@ -25,9 +25,9 @@ namespace FileManager
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         string[] Drives = Environment.GetLogicalDrives();
-        public  string _firstFilePath = "", _secondFilePath = "";
-        public  bool isFirstWindowFile = false, isSecondWindowFile = false;
-        public  string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
+        public string _firstFilePath = "", _secondFilePath = "";
+        public bool isFirstWindowFile = false, isSecondWindowFile = false;
+        public string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
         public void Reset()
         {
             FirstDiskList.Items.Clear();
@@ -181,6 +181,7 @@ namespace FileManager
                     else
                         isFirstWindowFile = true;
                     Function.LoadFilesAndDirectories(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager);
+                    isFirstWindowFile = false;
                     FirstWindowOnFileManager.UnselectAll();
                 }
                 _logger.Info($"Open next folder on first window, path: {_firstFilePath}");
@@ -211,6 +212,7 @@ namespace FileManager
                     else
                         isSecondWindowFile = true;
                     Function.LoadFilesAndDirectories(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager);
+                    isSecondWindowFile = false;
                     SecondWindowOnFileManager.UnselectAll();
                 }
                 _logger.Info($"Open next folder on second window, path: {_secondFilePath}");
@@ -280,12 +282,12 @@ namespace FileManager
 
         private void FirstWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Function.CreationMenuView(_firstFilePath, FirstTextPath);
+            Function.CreationMenuView(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             _logger.Info("Open Creation Menu on first window");
         }
         private void SecondWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Function.CreationMenuView(_secondFilePath, SecondtTextPath);
+            Function.CreationMenuView(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
             _logger.Info("Open Creation Menu on second window");
         }
     }
