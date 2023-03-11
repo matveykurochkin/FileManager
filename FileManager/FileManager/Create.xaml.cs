@@ -37,5 +37,13 @@ namespace FileManager
             }
         }
 
+        private void CreatePPTFile_Click(object sender, RoutedEventArgs e)
+        {
+            if (NameOfFileOrFolder.Text != "")
+            {
+                Function.AddFile(Function.pathOnTCWindow, NameOfFileOrFolder.Text, Function.MSPP);
+                Close();
+            }
+        }
     }
 }
