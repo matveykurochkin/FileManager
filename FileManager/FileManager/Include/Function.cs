@@ -63,10 +63,11 @@ namespace FileManager.Include
                 isFile = false;
                 textBox.Text = path;
                 removeBackSlash(textBox);
+                _logger.Info($"Go back button click success. Path: {path}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.Error($"Go back button click error. Error message: {ex.Message}");
             }
         }
 
@@ -166,7 +167,7 @@ namespace FileManager.Include
                         return;
                 }
                 Directory.CreateDirectory(pathString);
-                _logger.Info("Folder create successfully");
+                _logger.Info($"Folder create successfully. Folder name: New Folder. Folder path: {pathString}");
             }
             catch (Exception ex)
             {
@@ -192,7 +193,7 @@ namespace FileManager.Include
                 }
                 Directory.CreateDirectory(pathString);
                 LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
-                _logger.Info("Folder create successfully");
+                _logger.Info($"Folder create successfully. Folder name: {folderName}. Folder path: {pathString}");
             }
             catch (Exception ex)
             {
@@ -220,7 +221,7 @@ namespace FileManager.Include
                 byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file created by File Manager!");
                 fileStream.Write(info, 0, info.Length);
                 fileStream.Close();
-                _logger.Info($"File create successfully. File name: FileManager.txt");
+                _logger.Info($"File create successfully. File name: FileManager.txt. File path: {path}");
             }
             catch (Exception ex)
             {
@@ -250,7 +251,7 @@ namespace FileManager.Include
                 fileStream.Write(info, 0, info.Length);
                 fileStream.Close();
                 LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
-                _logger.Info($"File create successfully. File name: {fileName}.txt");
+                _logger.Info($"File create successfully. File name: {fileName}.txt. File path: {path}");
             }
             catch (Exception ex)
             {
@@ -276,7 +277,7 @@ namespace FileManager.Include
                 }
                 FileStream fileStream = File.Create($"{path}\\{fileName}.{fileType}");
                 LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
-                _logger.Info($"File create successfully. File name: {fileName}.{fileType}");
+                _logger.Info($"File create successfully. File name: {fileName}.{fileType}. File path: {path}");
             }
             catch (Exception ex)
             {
@@ -302,30 +303,37 @@ namespace FileManager.Include
         }
         public static void CopyFileAndDerictories(string sourcePath, string targetPath)
         {
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            try
             {
-                try
+                foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
                 {
-                    Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+                    try
+                    {
+                        Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"File and Directories copy not successfully. Error message: {ex.Message}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    _logger.Error($"File and Directories copy not successfully. Error message: {ex.Message}");
-                }
-            }
 
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
-            {
-                try
+                foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
                 {
-                    File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+                    try
+                    {
+                        File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"File and Directories copy not successfully. Error message: {ex.Message}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    _logger.Error($"File and Directories copy not successfully. Error message: {ex.Message}");
-                }
+                _logger.Info("File and Directories copy successfully");
             }
-            _logger.Info("File and Directories copy successfully");
+            catch (Exception ex)
+            {
+                _logger.Error($"File and Directories copy error. Error message: {ex.Message}");
+            }
         }
 
         public static string LoadUpdate(bool isFile, string path, string selectedItemName, ListView listView, TextBox textBox)
