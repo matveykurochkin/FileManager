@@ -39,12 +39,20 @@ namespace FileManager
             }
             FirstWindowOnFileManager.Items.Clear();
             SecondWindowOnFileManager.Items.Clear();
+
             FirstFreeSpace.Content = SecondFreeSpace.Content = "Space";
             FirstFormatDrive.Content = SecondFormatDrive.Content = "Format";
             FirstTypeDrive.Content = SecondTypeDrive.Content = "Name";
             FirstTextPath.Text = SecondtTextPath.Text = "";
+
             _firstFilePath = Function.LoadUpdate(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             _secondFilePath = Function.LoadUpdate(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
+
+            AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = false;
+            AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = false;
+
+            SearchInFirstWindow.Text = SearchInSecondWindow.Text = "";
+
             _logger.Info("Function reset succes");
         }
 
@@ -72,12 +80,14 @@ namespace FileManager
         {
             _logger.Info("Click on view drive button in first window");
             _firstFilePath = Function.ViewDirectoryAndFileOnWindow(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstDiskList, FirstTextPath, FirstFreeSpace, FirstFormatDrive, FirstTypeDrive);
+            AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = true;
         }
 
         private void SecondDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _logger.Info("Click on view drive button in second window");
             _secondFilePath = Function.ViewDirectoryAndFileOnWindow(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondDiskList, SecondtTextPath, SecondFreeSpace, SecondFormatDrive, SecondTypeDrive);
+            AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = true;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
@@ -263,8 +273,25 @@ namespace FileManager
             }
         }
 
-        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        private void EnterKeyDownSearchInFirstWindow(object sender, KeyEventArgs e)
         {         
+            if (e.Key == Key.Enter)
+            {
+                _logger.Info("Press enter for search in first window");
+                Function.Search(_firstFilePath, SearchInFirstWindow, FirstWindowOnFileManager);
+            }
+        }
+        private void EnterKeyDownSearchInSecondWindow(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                _logger.Info("Press enter for search in second window");
+                Function.Search(_secondFilePath, SearchInSecondWindow, SecondWindowOnFileManager);
+            }
+        }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
             string userName = Environment.UserName;
 
             string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
@@ -279,6 +306,18 @@ namespace FileManager
             fileStream.Close();
 
             Process.Start("notepad.exe", path);
+        }
+
+        private void SearchInFirstWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.Info("Click on first search button");
+            Function.Search(_firstFilePath, SearchInFirstWindow, FirstWindowOnFileManager);
+        }
+
+        private void SearchInSecondWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.Info("Click on second search button");
+            Function.Search(_secondFilePath, SearchInSecondWindow, SecondWindowOnFileManager);
         }
 
         private void FirstWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)

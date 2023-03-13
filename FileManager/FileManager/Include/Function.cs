@@ -14,11 +14,17 @@ namespace FileManager.Include
         static string[] Drives = Environment.GetLogicalDrives();
         public static void CopyPath(string path)
         {
-            Clipboard.SetText($"{path}");
-            _logger.Info("Command copy path to buffer success!");
+            try
+            {
+                Clipboard.SetText($"{path}");
+                _logger.Info("Command copy path to buffer success!");
+            }catch (Exception ex)
+            {
+                _logger.Error($"Command copy path to buffer not success. Error message: {ex.Message}");
+            }
         }
 
-        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.2" +
+        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.3" +
             "\nСоздание папок и файлов: " +
             "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
             "\n\tДля создания файла по умолчанию требуется перейти в нужный каталог и нажать кнопку New File!" +
@@ -39,7 +45,11 @@ namespace FileManager.Include
             "\n\tДля того, чтобы откыть блокнот, необходимо нажать кнопку Notepad!" +
             "\nДля открытия CMD:" +
             "\n\tДля того, чтобы открыть CMD, необходимо нажать кнопку CMD!" +
-            "\nФайловый менеджер предоставляет информацию о памяти текущего диска, его файловой системы и названия, также показывает скрытые папки!";
+            "\nФайловый менеджер предоставляет информацию о памяти текущего диска, его файловой системы и названия, также показывает скрытые папки!" +
+            "\n\tДля поиска файлов или директорий:" +
+            "\nЧтобы найти нужный файл или папку, необходимо выбрать папку в которой нужно искать этот файл или папку (нельзя искать в корне диска, потому что" +
+            "\nтам могут находится папки к которым у приложения нет доступа, что приведет к отрицательным результатам поиска), поиск требует точного названия файла (с расширением) " +
+            "\nили папки, к регистру не чувствителен!";
 
         public static string MSWord = "docx", MSPP = "ppt";
         public static string pathOnTCWindow = "", selectedonTCItemName = "";
@@ -342,6 +352,34 @@ namespace FileManager.Include
             LoadFilesAndDirectories(isFile, path, selectedItemName, listView);
             isFile = false;
             return path;
+        }
+        public static void Search(string path, TextBox textBox, ListView listView)
+        {
+            if (textBox.Text != "")
+            {
+                try
+                {
+                    listView.Items.Clear();
+
+                    foreach (var searchFile in Directory.GetFiles(path, textBox.Text, SearchOption.AllDirectories))
+                    {
+                        FileInfo fileInfo = new FileInfo(searchFile);
+                        listView.Items.Add(fileInfo);
+                    }
+
+                    foreach (var searchDirectory in Directory.GetDirectories(path, textBox.Text, SearchOption.AllDirectories))
+                    {
+                        DirectoryInfo directoryInfo = new DirectoryInfo(searchDirectory);
+                        listView.Items.Add(directoryInfo);
+                    }
+
+                    _logger.Info($"Search complited");
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error($"Search not complited. Error message: {ex.Message}");
+                }
+            }
         }
     }
 }
