@@ -20,6 +20,7 @@ namespace FileManager
                 FirstDiskList.Items.Add(disk);
                 SecondDiskList.Items.Add(disk);
             }
+            Reset();
         }
 
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
@@ -30,6 +31,7 @@ namespace FileManager
         public string _currentlyFirstSelectedItemName = "", _currentlySecondSelectedItemName = "";
         public void Reset()
         {
+            string[] Drives = Environment.GetLogicalDrives();
             FirstDiskList.Items.Clear();
             SecondDiskList.Items.Clear();
             foreach (string disk in Drives)
@@ -50,6 +52,7 @@ namespace FileManager
 
             AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = false;
             AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = false;
+            CopyButton.IsEnabled = false;
 
             SearchInFirstWindow.Text = SearchInSecondWindow.Text = "";
 
@@ -81,6 +84,8 @@ namespace FileManager
             _logger.Info("Click on view drive button in first window");
             _firstFilePath = Function.ViewDirectoryAndFileOnWindow(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstDiskList, FirstTextPath, FirstFreeSpace, FirstFormatDrive, FirstTypeDrive);
             AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = true;
+            if (SecondDiskList.SelectedIndex > -1)
+                CopyButton.IsEnabled = true;
         }
 
         private void SecondDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -88,6 +93,8 @@ namespace FileManager
             _logger.Info("Click on view drive button in second window");
             _secondFilePath = Function.ViewDirectoryAndFileOnWindow(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondDiskList, SecondtTextPath, SecondFreeSpace, SecondFormatDrive, SecondTypeDrive);
             AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = true;
+            if (FirstDiskList.SelectedIndex > -1)
+                CopyButton.IsEnabled = true;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
@@ -243,7 +250,22 @@ namespace FileManager
                     {
                         _logger.Info($"Following the entered path on first window succes");
                         _firstFilePath = FirstTextPath.Text;
-                        Function.LoadUpdate(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
+
+                        string copyPath = _firstFilePath;
+                        TextBox textBox = new TextBox();
+                        textBox.Text = copyPath;
+
+                        string driveName = _firstFilePath;
+                        driveName = driveName.Remove(3, driveName.Length - 3);
+
+                        for (int i = 0; i < FirstDiskList.Items.Count; i++)
+                            if (FirstDiskList.Items[i].ToString() == driveName)
+                                FirstDiskList.SelectedItem = FirstDiskList.Items[i];
+
+                        Function.LoadUpdate(isFirstWindowFile, copyPath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, textBox);
+                        AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = true;
+                        FirstTextPath.Text = copyPath;
+                        _firstFilePath = copyPath;
                     }
                 }
             }
@@ -263,7 +285,22 @@ namespace FileManager
                     {
                         _logger.Info($"Following the entered path on second window succes");
                         _secondFilePath = SecondtTextPath.Text;
-                        Function.LoadUpdate(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
+
+                        string copyPath = _secondFilePath;
+                        TextBox textBox = new TextBox();
+                        textBox.Text = copyPath;
+
+                        string driveName = _secondFilePath;
+                        driveName = driveName.Remove(3, driveName.Length - 3);
+
+                        for (int i = 0; i < SecondDiskList.Items.Count; i++)
+                            if (SecondDiskList.Items[i].ToString() == driveName)
+                                SecondDiskList.SelectedItem = SecondDiskList.Items[i];
+
+                        Function.LoadUpdate(isSecondWindowFile, copyPath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, textBox);
+                        AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = true;
+                        SecondtTextPath.Text = copyPath;
+                        _secondFilePath = copyPath;
                     }
                 }
             }
@@ -274,7 +311,7 @@ namespace FileManager
         }
 
         private void EnterKeyDownSearchInFirstWindow(object sender, KeyEventArgs e)
-        {         
+        {
             if (e.Key == Key.Enter)
             {
                 _logger.Info("Press enter for search in first window");

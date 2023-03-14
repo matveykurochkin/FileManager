@@ -57,7 +57,7 @@
         <Button x:Name="RemoveButtonOnSecondWindow" Content="Remove" HorizontalAlignment="Left" Margin="698,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="RemoveButtonOnSecondWindow_Click" IsEnabled="False"/>
         <Button x:Name="CopyFirstPathButton" Content="Copy" HorizontalAlignment="Left" Margin="465,83,0,0" VerticalAlignment="Top" Width="50" Height="22" Click="CopyFirstPathButton_Click"/>
         <Button x:Name="CopySecondPathButton" Content="Copy" HorizontalAlignment="Left" Margin="1003,82,0,0" VerticalAlignment="Top" Width="50" Height="22" Click="CopySecondPathButton_Click"/>
-        <Button x:Name="CopyButton" Content="Copy" HorizontalAlignment="Left" Margin="519,328,0,0" VerticalAlignment="Top"  Width="35" Height="33" Click="CopyButton_Click"/>
+        <Button x:Name="CopyButton" Content="Copy" HorizontalAlignment="Left" Margin="519,328,0,0" VerticalAlignment="Top"  Width="35" Height="33" Click="CopyButton_Click" IsEnabled="False"/>
         <Button x:Name="CreateFileInFirstWindowButton" Content="New File" HorizontalAlignment="Left" Margin="91,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="CreateFileInFirstWindowButton_Click" IsEnabled="False"/>
         <Button x:Name="CreateFileInSecondWindowButton" Content="New File" HorizontalAlignment="Left" Margin="629,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="CreateFileInSecondWindowButton_Click" IsEnabled="False"/>
         <Button x:Name="OpenInCMDFirstWindow" Content="CMD" HorizontalAlignment="Left" Margin="857,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="OpenInCMDFirstWindow_Click"/>
