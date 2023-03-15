@@ -18,13 +18,14 @@ namespace FileManager.Include
             {
                 Clipboard.SetText($"{path}");
                 _logger.Info("Command copy path to buffer success!");
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.Error($"Command copy path to buffer not success. Error message: {ex.Message}");
             }
         }
 
-        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.3" +
+        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.4" +
             "\nСоздание папок и файлов: " +
             "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
             "\n\tДля создания файла по умолчанию требуется перейти в нужный каталог и нажать кнопку New File!" +

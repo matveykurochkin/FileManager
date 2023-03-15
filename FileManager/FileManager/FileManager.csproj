@@ -120,6 +120,14 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="FileManagerLogo.ico" />
+    <Resource Include="Images\CopyIcon.png" />
+    <Resource Include="Images\MagnifierIcon.png" />
+    <Resource Include="Images\NotepadIcon.png" />
+    <Resource Include="Images\CMDIcon.png" />
+    <Resource Include="Images\UpdateIcon.png" />
+    <Resource Include="Images\ResetIcon.png" />
+    <Resource Include="Images\BackIcon.png" />
+    <Resource Include="Images\HelpIcon.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -147,5 +155,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
