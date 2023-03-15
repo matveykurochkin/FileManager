@@ -5,16 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileManager"
         mc:Ignorable="d"
-        Title="File Manager (x64) v0.3" Height="800" Width="1100"
+        Title="File Manager (x64) v0.4" Height="800" Width="1100"
         WindowStartupLocation="CenterScreen"
         Icon="FileManagerLogo.ico">
     <Grid>
-        <Button x:Name="FirstBackButton" Content="Back" HorizontalAlignment="Left" Margin="21,50,0,0" VerticalAlignment="Top" Height="29" Width="62" Click="FirstBackButton_Click"/>
+        <Button x:Name="FirstBackButton" Content="Back" HorizontalAlignment="Left" Margin="38,50,0,0" VerticalAlignment="Top" Height="29" Width="44" Click="FirstBackButton_Click" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\BackIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
         <Label Content="Label" HorizontalAlignment="Left" Margin="1034,774,0,0" VerticalAlignment="Top"/>
         <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="979,733,0,0" VerticalAlignment="Top" MouseLeftButtonDown="ExitLabel_MouseLeftButtonDown"/>
         <TextBox x:Name="FirstTextPath" HorizontalAlignment="Left" Margin="112,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="348" Height="22" KeyDown="EnterKeyDownOnFirstPath"/>
         <TextBox x:Name="SecondtTextPath" HorizontalAlignment="Left" Margin="650,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="348" Height="21" KeyDown="EnterKeyDownOnSecondPath"/>
-        <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="924,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="NotepadButton_Click"/>
+        <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="144,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="NotepadButton_Click" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\NotepadIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
         <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="21"/>
         <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="21"/>
         <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,569,74" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" >
@@ -43,30 +55,78 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <Button x:Name="SecondBackButton" Content="Back" HorizontalAlignment="Left" Margin="559,50,0,0" VerticalAlignment="Top"  Height="29" Width="62" Click="SecondBackButton_Click"/>
+        <Button x:Name="SecondBackButton" Content="Back" HorizontalAlignment="Left" Margin="577,51,0,0" VerticalAlignment="Top"  Height="29" Width="44" Click="SecondBackButton_Click" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\BackIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
         <Label x:Name="FirstFreeSpace" Content="Space" HorizontalAlignment="Left" Margin="88,52,0,0" VerticalAlignment="Top" Height="28" Width="216"/>
         <Label x:Name="SecondFreeSpace" Content="Space" HorizontalAlignment="Left" Margin="626,52,0,0" VerticalAlignment="Top" Height="28" Width="216"/>
         <Label x:Name="FirstFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="314,52,0,0" VerticalAlignment="Top" Height="29" Width="48"/>
         <Label x:Name="SecondFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="847,52,0,0" VerticalAlignment="Top" Height="26" Width="49"/>
         <Label x:Name="FirstTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="367,52,0,0" VerticalAlignment="Top" Height="30" Width="60"/>
         <Label x:Name="SecondTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="901,52,0,0" VerticalAlignment="Top" Height="29" Width="63"/>
-        <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="89,15,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="ResetButton_Click"/>
+        <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="64,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="ResetButton_Click" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\ResetIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
         <Button x:Name="AddFolderInFirstWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="21,698,0,0" VerticalAlignment="Top" Click="AddFolderInFirstWindow_Click" Width="65" Height="24" IsEnabled="False"/>
         <Button x:Name="AddFolderInSecondWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="559,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="AddFolderInSecondWindow_Click" IsEnabled="False"/>
         <Button x:Name="RemoveButtonOnFirstWindow" Content="Remove" HorizontalAlignment="Left" Margin="160,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="RemoveButtonOnFirstWindow_Click" IsEnabled="False"/>
         <Button x:Name="RemoveButtonOnSecondWindow" Content="Remove" HorizontalAlignment="Left" Margin="698,698,0,0" VerticalAlignment="Top" Width="65" Height="24" Click="RemoveButtonOnSecondWindow_Click" IsEnabled="False"/>
         <Button x:Name="CopyFirstPathButton" Content="Copy" HorizontalAlignment="Left" Margin="465,83,0,0" VerticalAlignment="Top" Width="50" Height="22" Click="CopyFirstPathButton_Click"/>
         <Button x:Name="CopySecondPathButton" Content="Copy" HorizontalAlignment="Left" Margin="1003,82,0,0" VerticalAlignment="Top" Width="50" Height="22" Click="CopySecondPathButton_Click"/>
-        <Button x:Name="CopyButton" Content="Copy" HorizontalAlignment="Left" Margin="519,328,0,0" VerticalAlignment="Top"  Width="35" Height="33" Click="CopyButton_Click" IsEnabled="False"/>
+        <Button x:Name="CopyButton" Content="Copy" HorizontalAlignment="Left" Margin="519,316,0,0" VerticalAlignment="Top" Width="35" Height="33" Click="CopyButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\CopyIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
         <Button x:Name="CreateFileInFirstWindowButton" Content="New File" HorizontalAlignment="Left" Margin="91,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="CreateFileInFirstWindowButton_Click" IsEnabled="False"/>
         <Button x:Name="CreateFileInSecondWindowButton" Content="New File" HorizontalAlignment="Left" Margin="629,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="CreateFileInSecondWindowButton_Click" IsEnabled="False"/>
-        <Button x:Name="OpenInCMDFirstWindow" Content="CMD" HorizontalAlignment="Left" Margin="857,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="OpenInCMDFirstWindow_Click"/>
-        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="22,15,0,0" VerticalAlignment="Top" Height="30" Width="62" Click="UpdateButton_Click"/>
-        <Button x:Name="HelpButton" Content="Help" HorizontalAlignment="Left" Margin="991,15,0,0" VerticalAlignment="Top" Width="62" Height="30" Click="HelpButton_Click"/>
-        <TextBox x:Name="SearchInFirstWindow" HorizontalAlignment="Left" Margin="229,698,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" Height="24" KeyDown="EnterKeyDownSearchInFirstWindow"/>
-        <Button x:Name="SearchInFirstWindowButton" Content="Search" HorizontalAlignment="Left" Margin="368,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="SearchInFirstWindowButton_Click" IsEnabled="False"/>
-        <TextBox x:Name="SearchInSecondWindow" HorizontalAlignment="Left" Margin="768,698,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="134" Height="24" KeyDown="EnterKeyDownSearchInSecondWindow"/>
-        <Button x:Name="SearchInSecondWindowButton" Content="Search" HorizontalAlignment="Left" Margin="907,698,0,0" VerticalAlignment="Top" Width="64" Height="24" Click="SearchInSecondWindowButton_Click" IsEnabled="False"/>
+        <Button x:Name="OpenInCMDFirstWindow" Content="CMD" HorizontalAlignment="Left" Margin="104,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenInCMDFirstWindow_Click" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\CMDIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
+        <Button x:Name="UpdateButton" Content="Update" HorizontalAlignment="Left" Margin="22,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="UpdateButton_Click" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\UpdateIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
+        <Button x:Name="HelpButton" Content="Help" HorizontalAlignment="Left" Margin="1018,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="HelpButton_Click" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\HelpIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
+        <TextBox x:Name="SearchInFirstWindow" HorizontalAlignment="Left" Margin="229,698,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Height="24" KeyDown="EnterKeyDownSearchInFirstWindow" IsEnabled="False"/>
+        <Button x:Name="SearchInFirstWindowButton" Content="Search" HorizontalAlignment="Left" Margin="419,698,0,0" VerticalAlignment="Top" Width="29" Height="24" Click="SearchInFirstWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\MagnifierIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
+        <TextBox x:Name="SearchInSecondWindow" HorizontalAlignment="Left" Margin="768,698,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Width="185" Height="24" KeyDown="EnterKeyDownSearchInSecondWindow" IsEnabled="False"/>
+        <Button x:Name="SearchInSecondWindowButton" Content="Search" HorizontalAlignment="Left" Margin="958,698,0,0" VerticalAlignment="Top" Width="29" Height="24" Click="SearchInSecondWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\MagnifierIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+        </Button>
 
     </Grid>
 </Window>

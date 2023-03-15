@@ -53,6 +53,7 @@ namespace FileManager
             AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = false;
             AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = false;
             CopyButton.IsEnabled = false;
+            SearchInFirstWindow.IsEnabled = SearchInSecondWindow.IsEnabled = false;
 
             SearchInFirstWindow.Text = SearchInSecondWindow.Text = "";
 
@@ -83,7 +84,7 @@ namespace FileManager
         {
             _logger.Info("Click on view drive button in first window");
             _firstFilePath = Function.ViewDirectoryAndFileOnWindow(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstDiskList, FirstTextPath, FirstFreeSpace, FirstFormatDrive, FirstTypeDrive);
-            AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = true;
+            AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = SearchInFirstWindow.IsEnabled = true;
             if (SecondDiskList.SelectedIndex > -1)
                 CopyButton.IsEnabled = true;
         }
@@ -92,7 +93,7 @@ namespace FileManager
         {
             _logger.Info("Click on view drive button in second window");
             _secondFilePath = Function.ViewDirectoryAndFileOnWindow(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondDiskList, SecondtTextPath, SecondFreeSpace, SecondFormatDrive, SecondTypeDrive);
-            AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = true;
+            AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = SearchInSecondWindow.IsEnabled = true;
             if (FirstDiskList.SelectedIndex > -1)
                 CopyButton.IsEnabled = true;
         }
