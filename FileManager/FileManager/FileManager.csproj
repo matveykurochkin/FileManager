@@ -120,14 +120,21 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="FileManagerLogo.ico" />
-    <Resource Include="Images\CopyIcon.png" />
-    <Resource Include="Images\MagnifierIcon.png" />
     <Resource Include="Images\NotepadIcon.png" />
     <Resource Include="Images\CMDIcon.png" />
     <Resource Include="Images\UpdateIcon.png" />
     <Resource Include="Images\ResetIcon.png" />
     <Resource Include="Images\BackIcon.png" />
     <Resource Include="Images\HelpIcon.png" />
+    <Resource Include="Images\NextIcon.png" />
+    <Resource Include="Images\CopyIcon.png" />
+    <Resource Include="Images\MagnifierIcon.png" />
+    <Resource Include="Images\FolderIcon.png" />
+    <Resource Include="Images\FileIcon.png" />
+    <Resource Include="Images\RecycleBinIcon.png" />
+    <Resource Include="Images\CopyToFolderIcon.png" />
+    <Resource Include="Images\WordIcon.png" />
+    <Resource Include="Images\PowerPointIcon.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -250,23 +250,9 @@ namespace FileManager
                     if (e.Key == Key.Enter)
                     {
                         _logger.Info($"Following the entered path on first window succes");
-                        _firstFilePath = FirstTextPath.Text;
-
-                        string copyPath = _firstFilePath;
-                        TextBox textBox = new TextBox();
-                        textBox.Text = copyPath;
-
-                        string driveName = _firstFilePath;
-                        driveName = driveName.Remove(3, driveName.Length - 3);
-
-                        for (int i = 0; i < FirstDiskList.Items.Count; i++)
-                            if (FirstDiskList.Items[i].ToString() == driveName)
-                                FirstDiskList.SelectedItem = FirstDiskList.Items[i];
-
-                        Function.LoadUpdate(isFirstWindowFile, copyPath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, textBox);
-                        AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = true;
-                        FirstTextPath.Text = copyPath;
-                        _firstFilePath = copyPath;
+                        _firstFilePath = Function.NextPath(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstTextPath, FirstWindowOnFileManager, FirstDiskList);
+                        if (_firstFilePath != null)
+                            AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = true;
                     }
                 }
             }
@@ -285,23 +271,9 @@ namespace FileManager
                     if (e.Key == Key.Enter)
                     {
                         _logger.Info($"Following the entered path on second window succes");
-                        _secondFilePath = SecondtTextPath.Text;
-
-                        string copyPath = _secondFilePath;
-                        TextBox textBox = new TextBox();
-                        textBox.Text = copyPath;
-
-                        string driveName = _secondFilePath;
-                        driveName = driveName.Remove(3, driveName.Length - 3);
-
-                        for (int i = 0; i < SecondDiskList.Items.Count; i++)
-                            if (SecondDiskList.Items[i].ToString() == driveName)
-                                SecondDiskList.SelectedItem = SecondDiskList.Items[i];
-
-                        Function.LoadUpdate(isSecondWindowFile, copyPath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, textBox);
-                        AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = true;
-                        SecondtTextPath.Text = copyPath;
-                        _secondFilePath = copyPath;
+                        _secondFilePath = Function.NextPath(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondtTextPath, SecondWindowOnFileManager, SecondDiskList);
+                        if (_secondFilePath != null)
+                            AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = true;
                     }
                 }
             }
@@ -330,20 +302,8 @@ namespace FileManager
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            string userName = Environment.UserName;
-
-            string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
-            _logger.Info($"Click button help. Help file path: {path}");
-
-            if (File.Exists($"{path}"))
-                File.Delete(path);
-
-            FileStream fileStream = File.Create($"{path}");
-            byte[] info = new UTF8Encoding(true).GetBytes(Function.help);
-            fileStream.Write(info, 0, info.Length);
-            fileStream.Close();
-
-            Process.Start("notepad.exe", path);
+            _logger.Info($"Click button help");
+            Function.Help();
         }
 
         private void SearchInFirstWindowButton_Click(object sender, RoutedEventArgs e)
@@ -356,6 +316,22 @@ namespace FileManager
         {
             _logger.Info("Click on second search button");
             Function.Search(_secondFilePath, SearchInSecondWindow, SecondWindowOnFileManager);
+        }
+
+        private void FirstNextButton_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.Info("Click on first next button");
+            _firstFilePath = Function.NextPath(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstTextPath, FirstWindowOnFileManager, FirstDiskList);
+            if (_firstFilePath != null)
+                AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = true;
+        }
+
+        private void SedondNextButton_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.Info("Click on second next button");
+            _secondFilePath = Function.NextPath(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondtTextPath, SecondWindowOnFileManager, SecondDiskList);
+            if (_secondFilePath != null)
+                AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = true;
         }
 
         private void FirstWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)

@@ -382,5 +382,55 @@ namespace FileManager.Include
                 }
             }
         }
+
+        public static string NextPath(bool isFile, string path, string selectedItemName, TextBox text, ListView listView, ComboBox comboBox)
+        {
+            try
+            {
+                if (text.Text != "")
+                {
+                    _logger.Info($"Following the next button click path on {listView.Name} window succes");
+                    path = text.Text;
+
+                    string copyPath = path;
+                    TextBox textBox = new TextBox();
+                    textBox.Text = copyPath;
+
+                    string driveName = path;
+                    driveName = driveName.Remove(3, driveName.Length - 3);
+
+                    for (int i = 0; i < comboBox.Items.Count; i++)
+                        if (comboBox.Items[i].ToString() == driveName)
+                            comboBox.SelectedItem = comboBox.Items[i];
+
+                    LoadUpdate(isFile, copyPath, selectedItemName, listView, textBox);
+                    text.Text = copyPath;
+                    path = copyPath;
+                    return path;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error following the next button click path on {listView.Name} window. Error message: {ex.Message}");
+            }
+            return null;
+        }
+        public static void Help()
+        {
+            string userName = Environment.UserName;
+
+            string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
+            _logger.Info($"Help file path: {path}");
+
+            if (File.Exists($"{path}"))
+                File.Delete(path);
+
+            FileStream fileStream = File.Create($"{path}");
+            byte[] info = new UTF8Encoding(true).GetBytes(Function.help);
+            fileStream.Write(info, 0, info.Length);
+            fileStream.Close();
+
+            Process.Start("notepad.exe", path);
+        }
     }
 }
