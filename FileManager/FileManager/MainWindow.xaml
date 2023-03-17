@@ -8,7 +8,8 @@
         Title="File Manager (x64) v0.4.1" Height="800" Width="1100"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Icon="FileManagerLogo.ico">
+        Icon="FileManagerLogo.ico" 
+        Closed="CloseMainWindow">
     <Grid>
         <Button x:Name="FirstBackButton" Content="Back" HorizontalAlignment="Left" Margin="38,50,0,0" VerticalAlignment="Top" Height="29" Width="44" Click="FirstBackButton_Click" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
