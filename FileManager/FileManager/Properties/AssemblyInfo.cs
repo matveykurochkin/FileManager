@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("File Manager x64")]
-[assembly: AssemblyCopyright("by Matvey Kurochkin")]
+[assembly: AssemblyCopyright("Matvey Kurochkin")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
