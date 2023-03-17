@@ -1,5 +1,6 @@
 ﻿using FileManager.Include;
 using NLog;
+using System;
 using System.Windows;
 
 namespace FileManager
@@ -9,6 +10,7 @@ namespace FileManager
         public Create()
         {
             InitializeComponent();
+            _logger.Info($"Creation Menu running. Time: {DateTime.Now}");
         }
 
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();

@@ -35,13 +35,13 @@ namespace FileManager.Include
             "\nУдаление папок:" +
             "\n\tДля удаления папок необходимо зайти в папку которую нужно удалить и нажать кнопку Remove, после чего папка и все ее содержимое безвозвратно удалится!" +
             "\nОбновление данных:" +
-            "\n\tЕсли файлы были добавлены через другое приложение или с помощью Creation Menu, то следует нажать кнопку Update после любого из действий!" +
+            "\n\tЕсли файлы были добавлены через другое приложение, то следует нажать кнопку Update!" +
             "\nСброс всех окон и их данных:" +
             "\n\tЧтобы сбросить все окна до состояния по умолчанию, необходимо нажать кнопку Reset!" +
             "\nКопирование пути:" +
             "\n\tДля того, чтобы скопировать путь необходимо перейти в нужный каталог и нажать кнопку Copy в зависимости от того, в каком окне вы находитесь!" +
             "\nДля перехода по скопированному пути:" +
-            "\n\tДля того, чтобы перейти по скопированному пути, нужно вставить путь в одно из полей, где располагается путь и нажать Enter!" +
+            "\n\tДля того, чтобы перейти по скопированному пути, нужно вставить путь в одно из полей, где располагается путь и нажать Enter или на кнопку Next!" +
             "\nОткрытие Блокнота:" +
             "\n\tДля того, чтобы откыть блокнот, необходимо нажать кнопку Notepad!" +
             "\nДля открытия CMD:" +
@@ -296,18 +296,34 @@ namespace FileManager.Include
                 _logger.Error("File create not successfully");
             }
         }
+
         public static void CreationMenuView(bool isFile, string path, string selectedItemName, ListView listView, TextBox textBox)
         {
+            bool isWindowOpen = false;
+
             if (textBox.Text != "")
             {
-                Create create = new Create();
-                pathOnTCWindow = path;
-                selectedonTCItemName = selectedItemName;
-                isFileTCwindow = isFile;
-                listViewOnTC = listView;
-                textBoxOnTC = textBox;
-                create.Show();
-                _logger.Info("Creation Menu loaded");
+
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window is Create)
+                    {
+                        isWindowOpen = true;
+                        window.Activate();
+                    }
+                }
+
+                if (!isWindowOpen)
+                {
+                    Create create = new Create();
+                    pathOnTCWindow = path;
+                    selectedonTCItemName = selectedItemName;
+                    isFileTCwindow = isFile;
+                    listViewOnTC = listView;
+                    textBoxOnTC = textBox;
+                    create.Show();
+                    _logger.Info("Creation Menu loaded");
+                }
             }
             else
                 _logger.Error("Creation Menu not loaded");
@@ -417,20 +433,27 @@ namespace FileManager.Include
         }
         public static void Help()
         {
-            string userName = Environment.UserName;
+            try
+            {
+                string userName = Environment.UserName;
 
-            string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
-            _logger.Info($"Help file path: {path}");
+                string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
+                _logger.Info($"Help file path: {path}");
 
-            if (File.Exists($"{path}"))
-                File.Delete(path);
+                if (File.Exists($"{path}"))
+                    File.Delete(path);
 
-            FileStream fileStream = File.Create($"{path}");
-            byte[] info = new UTF8Encoding(true).GetBytes(Function.help);
-            fileStream.Write(info, 0, info.Length);
-            fileStream.Close();
+                FileStream fileStream = File.Create($"{path}");
+                byte[] info = new UTF8Encoding(true).GetBytes(Function.help);
+                fileStream.Write(info, 0, info.Length);
+                fileStream.Close();
 
-            Process.Start("notepad.exe", path);
+                Process.Start("notepad.exe", path);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Help file not created. Error message: {ex.Message}");
+            }
         }
     }
 }
