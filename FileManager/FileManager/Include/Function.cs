@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,22 +11,7 @@ namespace FileManager.Include
 {
     public static class Function
     {
-        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
-        static string[] Drives = Environment.GetLogicalDrives();
-        public static void CopyPath(string path)
-        {
-            try
-            {
-                Clipboard.SetText($"{path}");
-                _logger.Info("Command copy path to buffer success!");
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Command copy path to buffer not success. Error message: {ex.Message}");
-            }
-        }
-
-        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.4" +
+        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.4.1" +
             "\nСоздание папок и файлов: " +
             "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
             "\n\tДля создания файла по умолчанию требуется перейти в нужный каталог и нажать кнопку New File!" +
@@ -57,6 +43,21 @@ namespace FileManager.Include
         public static bool isFileTCwindow;
         static ListView listViewOnTC = new ListView();
         static TextBox textBoxOnTC = new TextBox();
+        static Thread thread;
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+        static string[] Drives = Environment.GetLogicalDrives();
+        public static void CopyPath(string path)
+        {
+            try
+            {
+                Clipboard.SetText($"{path}");
+                _logger.Info("Command copy path to buffer success!");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Command copy path to buffer not success. Error message: {ex.Message}");
+            }
+        }
         public static void removeBackSlash(TextBox textBox)
         {
             string path = textBox.Text;
@@ -287,6 +288,7 @@ namespace FileManager.Include
                         return;
                 }
                 FileStream fileStream = File.Create($"{path}\\{fileName}.{fileType}");
+                fileStream.Close();
                 LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
                 _logger.Info($"File create successfully. File name: {fileName}.{fileType}. File path: {path}");
             }
@@ -365,10 +367,20 @@ namespace FileManager.Include
 
         public static string LoadUpdate(bool isFile, string path, string selectedItemName, ListView listView, TextBox textBox)
         {
-            path = textBox.Text;
-            LoadFilesAndDirectories(isFile, path, selectedItemName, listView);
-            isFile = false;
-            return path;
+            try
+            {
+
+                path = textBox.Text;
+                LoadFilesAndDirectories(isFile, path, selectedItemName, listView);
+                isFile = false;
+                _logger.Info("Load and Update successfully");
+                return path;
+            }
+            catch (Exception ex)
+            {
+                _logger.Info($"Load and Update not successfully. Error message: {ex.Message}");
+            }
+            return null;
         }
         public static void Search(string path, TextBox textBox, ListView listView)
         {
@@ -433,22 +445,27 @@ namespace FileManager.Include
         }
         public static void Help()
         {
+
             try
             {
-                string userName = Environment.UserName;
+                thread = new Thread(() =>
+                {
+                    string userName = Environment.UserName;
 
-                string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
-                _logger.Info($"Help file path: {path}");
+                    string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
+                    _logger.Info($"Help file path: {path}");
 
-                if (File.Exists($"{path}"))
-                    File.Delete(path);
+                    if (File.Exists($"{path}"))
+                        File.Delete(path);
 
-                FileStream fileStream = File.Create($"{path}");
-                byte[] info = new UTF8Encoding(true).GetBytes(Function.help);
-                fileStream.Write(info, 0, info.Length);
-                fileStream.Close();
+                    FileStream fileStream = File.Create($"{path}");
+                    byte[] info = new UTF8Encoding(true).GetBytes(help);
+                    fileStream.Write(info, 0, info.Length);
+                    fileStream.Close();
 
-                Process.Start("notepad.exe", path);
+                    Process.Start("notepad.exe", path);
+                });
+                thread.Start();
             }
             catch (Exception ex)
             {
