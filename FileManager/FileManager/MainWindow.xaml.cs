@@ -52,7 +52,7 @@ namespace FileManager
 
             AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = false;
             AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = false;
-            CopyButton.IsEnabled = false;
+            CopyButton.IsEnabled = CopyFiles.IsEnabled = false;
             SearchInFirstWindow.IsEnabled = SearchInSecondWindow.IsEnabled = false;
 
             SearchInFirstWindow.Text = SearchInSecondWindow.Text = "";
@@ -86,7 +86,7 @@ namespace FileManager
             _firstFilePath = Function.ViewDirectoryAndFileOnWindow(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstDiskList, FirstTextPath, FirstFreeSpace, FirstFormatDrive, FirstTypeDrive);
             AddFolderInFirstWindow.IsEnabled = CreateFileInFirstWindowButton.IsEnabled = RemoveButtonOnFirstWindow.IsEnabled = SearchInFirstWindowButton.IsEnabled = SearchInFirstWindow.IsEnabled = true;
             if (SecondDiskList.SelectedIndex > -1)
-                CopyButton.IsEnabled = true;
+                CopyButton.IsEnabled = CopyFiles.IsEnabled = true;
         }
 
         private void SecondDiskList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -95,7 +95,7 @@ namespace FileManager
             _secondFilePath = Function.ViewDirectoryAndFileOnWindow(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondDiskList, SecondtTextPath, SecondFreeSpace, SecondFormatDrive, SecondTypeDrive);
             AddFolderInSecondWindow.IsEnabled = CreateFileInSecondWindowButton.IsEnabled = RemoveButtonOnSecondWindow.IsEnabled = SearchInSecondWindowButton.IsEnabled = SearchInSecondWindow.IsEnabled = true;
             if (FirstDiskList.SelectedIndex > -1)
-                CopyButton.IsEnabled = true;
+                CopyButton.IsEnabled = CopyFiles.IsEnabled = true;
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
@@ -107,6 +107,8 @@ namespace FileManager
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             _logger.Info("Click on update button");
+            Function.UpdateInfoDrive(FirstDiskList,FirstFreeSpace,FirstFormatDrive,FirstTypeDrive);
+            Function.UpdateInfoDrive(SecondDiskList, SecondFreeSpace, SecondFormatDrive, SecondTypeDrive);
             _firstFilePath = Function.LoadUpdate(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             _secondFilePath = Function.LoadUpdate(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
         }
@@ -339,6 +341,14 @@ namespace FileManager
             _logger.Info("Close main window and close all window");
             foreach (Window window in App.Current.Windows)
                 window.Close();
+        }
+
+        private void CopyFiles_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.Info("Click on copy files button");
+            Function.CopyFiles(_firstFilePath,_secondFilePath);
+            _firstFilePath = Function.LoadUpdate(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
+            _secondFilePath = Function.LoadUpdate(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
         }
 
         private void FirstWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)

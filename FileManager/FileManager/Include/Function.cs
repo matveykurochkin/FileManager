@@ -11,7 +11,7 @@ namespace FileManager.Include
 {
     public static class Function
     {
-        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.4.1" +
+        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.5" +
             "\n\tВсе кнопки на интерфейсе заменены соответствующими значками, при наведении на кнопку, будет написано ее название." +
             "\nСоздание папок и файлов: " +
             "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
@@ -20,6 +20,8 @@ namespace FileManager.Include
             "\nКопирование папок:" +
             "\n\tДля копирования папки необходимо в левом окне выбрать папку, необходимую для копирования, а в правом окне папку, в которую нужно скопировать данные, после нажать кнопку Copy!" +
             "\nУдаление папок:" +
+            "\n\tДля копирования только файлов:" +
+            "\nЧтобы скопировать только файлы из текущей папки в папку, необходимую для копирования, нужно нажать на кнопку Copy Files! (в левом окне папка откуда копировать, в правом куда)" +
             "\n\tДля удаления папок необходимо зайти в папку которую нужно удалить и нажать кнопку Remove, после чего папка и все ее содержимое безвозвратно удалится!" +
             "\nОбновление данных:" +
             "\n\tЕсли файлы были добавлены через другое приложение, то следует нажать кнопку Update!" +
@@ -366,6 +368,28 @@ namespace FileManager.Include
             }
         }
 
+        public static void CopyFiles(string sourcePath, string targetPath)
+        {
+            try
+            {
+                foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"Files copy not successfully. Error message: {ex.Message}");
+                    }
+                }
+                _logger.Info("Files copy successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Files copy error. Error message: {ex.Message}");
+            }
+        }
         public static string LoadUpdate(bool isFile, string path, string selectedItemName, ListView listView, TextBox textBox)
         {
             try
@@ -471,6 +495,25 @@ namespace FileManager.Include
             catch (Exception ex)
             {
                 _logger.Error($"Help file not created. Error message: {ex.Message}");
+            }
+        }
+
+        public static void UpdateInfoDrive(ComboBox comboBox, Label freeSpace, Label formatDrive, Label typeDrive)
+        {
+            for (int i = 0; i < Drives.Length; i++)
+            {
+                if ((string)comboBox.SelectedItem == Drives[i])
+                {
+                    foreach (var drive in DriveInfo.GetDrives())
+                    {
+                        if (Drives[i] == drive.Name)
+                        {
+                            freeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
+                            formatDrive.Content = $"{drive.DriveFormat}";
+                            typeDrive.Content = $"{drive.VolumeLabel}";
+                        }
+                    }
+                }
             }
         }
     }
