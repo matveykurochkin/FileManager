@@ -135,6 +135,7 @@
     <Resource Include="Images\CopyToFolderIcon.png" />
     <Resource Include="Images\WordIcon.png" />
     <Resource Include="Images\PowerPointIcon.png" />
+    <Resource Include="Images\CopyFilesIcon.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
