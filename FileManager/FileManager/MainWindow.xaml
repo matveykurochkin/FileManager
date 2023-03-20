@@ -250,6 +250,16 @@
                 <ToolTip>Next</ToolTip>
             </Button.ToolTip>
         </Button>
+        <Button x:Name="CopyFiles" Content="Copy Files" HorizontalAlignment="Left" Margin="531,345,0,0" Width="28" Height="26" VerticalAlignment="Top" Click="CopyFiles_Click" IsEnabled="False" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\CopyFilesIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+            <Button.ToolTip>
+                <ToolTip>Copy only files</ToolTip>
+            </Button.ToolTip>
+        </Button>
 
     </Grid>
 </Window>
