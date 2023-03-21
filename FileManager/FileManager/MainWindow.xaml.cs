@@ -107,8 +107,8 @@ namespace FileManager
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             _logger.Info("Click on update button");
-            Function.UpdateInfoDrive(FirstDiskList,FirstFreeSpace,FirstFormatDrive,FirstTypeDrive);
-            Function.UpdateInfoDrive(SecondDiskList, SecondFreeSpace, SecondFormatDrive, SecondTypeDrive);
+            Function.UpdateInfoDrive(FirstDiskList,FirstFreeSpace);
+            Function.UpdateInfoDrive(SecondDiskList, SecondFreeSpace);
             _firstFilePath = Function.LoadUpdate(isFirstWindowFile, _firstFilePath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             _secondFilePath = Function.LoadUpdate(isSecondWindowFile, _secondFilePath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
         }

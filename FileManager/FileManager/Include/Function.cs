@@ -1,6 +1,7 @@
 ﻿using NLog;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -115,7 +116,8 @@ namespace FileManager.Include
                     {
                         if (Drives[i] == drive.Name)
                         {
-                            freeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
+                            long freeSpaceOnDrive = drive.TotalFreeSpace / 1024, totalSizeOnDrive = drive.TotalSize / 1024;
+                            freeSpace.Content = $"{freeSpaceOnDrive.ToString("#,#", new CultureInfo("ru-RU"))} k of {totalSizeOnDrive.ToString("#,#", new CultureInfo("ru-RU"))} k free";
                             formatDrive.Content = $"{drive.DriveFormat}";
                             typeDrive.Content = $"{drive.VolumeLabel}";
                         }
@@ -498,7 +500,7 @@ namespace FileManager.Include
             }
         }
 
-        public static void UpdateInfoDrive(ComboBox comboBox, Label freeSpace, Label formatDrive, Label typeDrive)
+        public static void UpdateInfoDrive(ComboBox comboBox, Label freeSpace)
         {
             for (int i = 0; i < Drives.Length; i++)
             {
@@ -508,9 +510,8 @@ namespace FileManager.Include
                     {
                         if (Drives[i] == drive.Name)
                         {
-                            freeSpace.Content = $"{drive.TotalFreeSpace} b of {drive.TotalSize} b";
-                            formatDrive.Content = $"{drive.DriveFormat}";
-                            typeDrive.Content = $"{drive.VolumeLabel}";
+                            long freeSpaceOnDrive = drive.TotalFreeSpace / 1024, totalSizeOnDrive = drive.TotalSize / 1024;
+                            freeSpace.Content = $"{freeSpaceOnDrive.ToString("#,#", new CultureInfo("ru-RU"))} k of {totalSizeOnDrive.ToString("#,#", new CultureInfo("ru-RU"))} k free";
                         }
                     }
                 }
