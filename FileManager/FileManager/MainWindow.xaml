@@ -23,7 +23,7 @@
         </Button>
         <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="995,736,0,0" VerticalAlignment="Top" MouseLeftButtonDown="ExitLabel_MouseLeftButtonDown"/>
         <TextBox x:Name="FirstTextPath" HorizontalAlignment="Left" Margin="112,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="384" Height="22" KeyDown="EnterKeyDownOnFirstPath"/>
-        <TextBox x:Name="SecondtTextPath" HorizontalAlignment="Left" Margin="650,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="384" Height="21" KeyDown="EnterKeyDownOnSecondPath"/>
+        <TextBox x:Name="SecondtTextPath" HorizontalAlignment="Left" Margin="650,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="384" Height="22" KeyDown="EnterKeyDownOnSecondPath"/>
         <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="144,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="NotepadButton_Click" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
@@ -34,8 +34,8 @@
                 <ToolTip>Notepad</ToolTip>
             </Button.ToolTip>
         </Button>
-        <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="21"/>
-        <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="21"/>
+        <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="22"/>
+        <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="22"/>
         <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,0,0" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" HorizontalAlignment="Left" Width="510" Height="600" VerticalAlignment="Top" >
             <ListView.View>
                 <GridView>
@@ -72,12 +72,12 @@
                 <ToolTip>Back</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Label x:Name="FirstFreeSpace" Content="Space" HorizontalAlignment="Left" Margin="88,52,0,0" VerticalAlignment="Top" Height="28" Width="216"/>
-        <Label x:Name="SecondFreeSpace" Content="Space" HorizontalAlignment="Left" Margin="626,52,0,0" VerticalAlignment="Top" Height="28" Width="216"/>
-        <Label x:Name="FirstFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="314,52,0,0" VerticalAlignment="Top" Height="29" Width="48"/>
-        <Label x:Name="SecondFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="847,52,0,0" VerticalAlignment="Top" Height="26" Width="49"/>
-        <Label x:Name="FirstTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="367,52,0,0" VerticalAlignment="Top" Height="30" Width="60"/>
-        <Label x:Name="SecondTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="901,52,0,0" VerticalAlignment="Top" Height="29" Width="63"/>
+        <Label x:Name="FirstFreeSpace" Content="Space" HorizontalAlignment="Left" Margin="88,52,0,0" VerticalAlignment="Top" Height="28" Width="255"/>
+        <Label x:Name="SecondFreeSpace" Content="Space" HorizontalAlignment="Left" Margin="626,52,0,0" VerticalAlignment="Top" Height="28" Width="255"/>
+        <Label x:Name="FirstFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="348,52,0,0" VerticalAlignment="Top" Height="28" Width="48"/>
+        <Label x:Name="SecondFormatDrive" Content="Format" HorizontalAlignment="Left" Margin="886,52,0,0" VerticalAlignment="Top" Height="28" Width="48"/>
+        <Label x:Name="FirstTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="401,52,0,0" VerticalAlignment="Top" Height="28" Width="60"/>
+        <Label x:Name="SecondTypeDrive" Content="Name" HorizontalAlignment="Left" Margin="939,52,0,0" VerticalAlignment="Top" Height="28" Width="60"/>
         <Button x:Name="ResetButton" Content="Reset" HorizontalAlignment="Left" Margin="64,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="ResetButton_Click" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
@@ -230,7 +230,7 @@
                 <ToolTip>Search</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="FirstNextButton" Content="Next" HorizontalAlignment="Left" Margin="432,49,0,0" VerticalAlignment="Top" Height="29" Width="44" Background="White" BorderBrush="White" Click="FirstNextButton_Click">
+        <Button x:Name="FirstNextButton" Content="Next" HorizontalAlignment="Left" Margin="452,49,0,0" VerticalAlignment="Top" Height="29" Width="44" Background="White" BorderBrush="White" Click="FirstNextButton_Click">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\NextIcon.png"/>
@@ -240,7 +240,7 @@
                 <ToolTip>Next</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="SedondNextButton" Content="Next" HorizontalAlignment="Left" Margin="969,49,0,0" VerticalAlignment="Top" Height="29" Width="44" Background="White" BorderBrush="White" Click="SedondNextButton_Click">
+        <Button x:Name="SedondNextButton" Content="Next" HorizontalAlignment="Left" Margin="990,49,0,0" VerticalAlignment="Top" Height="29" Width="44" Background="White" BorderBrush="White" Click="SedondNextButton_Click">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\NextIcon.png"/>
