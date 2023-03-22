@@ -138,7 +138,7 @@
                 <ToolTip>Copy Path</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="CopySecondPathButton" Content="Copy" HorizontalAlignment="Left" Margin="1039,82,0,0" VerticalAlignment="Top" Width="30" Height="22" Click="CopySecondPathButton_Click" Background="White" BorderBrush="White">
+        <Button x:Name="CopySecondPathButton" Content="Copy" HorizontalAlignment="Left" Margin="1039,83,0,0" VerticalAlignment="Top" Width="30" Height="22" Click="CopySecondPathButton_Click" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\CopyIcon.png"/>
