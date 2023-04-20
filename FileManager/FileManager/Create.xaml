@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileManager"
         mc:Ignorable="d"
-        Title="Creation Menu" Height="180" Width="180"
+        Title="Creation Menu v0.6" Height="150" Width="250"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Icon="FileManagerLogo.ico">
     <Grid>
-        <TextBox x:Name="NameOfFileOrFolder" Margin="10,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" FontSize="13" HorizontalAlignment="Left" Width="145"/>
-        <Button x:Name="AddFolderButton" Content="Folder" Margin="52,102,0,0" Click="AddFolderButton_Click" HorizontalAlignment="Left" Width="60" Height="35" VerticalAlignment="Top" Background="White" BorderBrush="White">
+        <TextBox x:Name="NameOfFileOrFolder" Margin="10,32,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" FontSize="13"/>
+        <Button x:Name="AddFolderButton" Content="Folder" Margin="186,62,10,0" Click="AddFolderButton_Click" Height="35" VerticalAlignment="Top" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\FolderIcon.png"/>
@@ -21,7 +21,7 @@
                 <ToolTip>Create Folder</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="AddFileButton" Content="TXT File" Margin="10,62,0,0" Click="AddFileButton_Click" Width="45" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Background="White" BorderBrush="White">
+        <Button x:Name="AddFileButton" Content="TXT File" Margin="10,62,186,0" Click="AddFileButton_Click" Height="35" VerticalAlignment="Top" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\FileIcon.png"/>
@@ -31,8 +31,8 @@
                 <ToolTip>Create Txt File</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Label x:Name="LabelName" Content="Enter Name" HorizontalAlignment="Left" VerticalAlignment="Top" Height="27" Margin="46,5,0,0"/>
-        <Button x:Name="AddWordDocumentButton" Content="MS Word" Margin="60,62,0,0" RenderTransformOrigin="0.107,0.368" Click="AddWordDocumentButton_Click" HorizontalAlignment="Left" Width="45" Height="35" VerticalAlignment="Top" Background="White" BorderBrush="White">
+        <Label x:Name="LabelName" Content="Enter Name" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" Margin="0,5,0,0"/>
+        <Button x:Name="AddWordDocumentButton" Content="MS Word" Margin="69,62,127,0" RenderTransformOrigin="0.107,0.368" Click="AddWordDocumentButton_Click" Height="35" VerticalAlignment="Top" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\WordIcon.png"/>
@@ -42,7 +42,7 @@
                 <ToolTip>Create MS Word File</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="CreatePPTFile" Content="MS PowerPoint" Margin="110,62,0,0" VerticalAlignment="Top"  Click="CreatePPTFile_Click" HorizontalAlignment="Left"  Width="45" Height="35" Background="White" BorderBrush="White">
+        <Button x:Name="CreatePPTFile" Content="MS PowerPoint" Margin="127,62,69,0" VerticalAlignment="Top"  Click="CreatePPTFile_Click" Height="35" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\PowerPointIcon.png"/>
