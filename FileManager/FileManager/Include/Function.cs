@@ -11,8 +11,8 @@ using System.Windows.Controls;
 namespace FileManager.Include
 {
     public static class Function
-    {
-        public static string help = "\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.5" +
+    {      
+        public static string help = $"\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.6" +
             "\n\tВсе кнопки на интерфейсе заменены соответствующими значками, при наведении на кнопку, будет написано ее название." +
             "\nСоздание папок и файлов: " +
             "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
@@ -50,6 +50,8 @@ namespace FileManager.Include
         static Thread thread;
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         static string[] Drives = Environment.GetLogicalDrives();
+        private static string projectPath = AppDomain.CurrentDomain.BaseDirectory;
+
         public static void CopyPath(string path)
         {
             try
@@ -516,6 +518,33 @@ namespace FileManager.Include
                     }
                 }
             }
+        }
+
+        public static string[] LoadDialogWindowInformation()
+        {
+            string path = $"{projectPath}\\load.txt";
+            string userName = Environment.UserName;
+            if (!File.Exists($"{path}"))
+            {
+                FileStream fileStream = File.Create($"{path}");
+                byte[] info = new UTF8Encoding(true).GetBytes($"C:\\Users\\{userName}\nC:\\Users\\{userName}");
+                fileStream.Write(info, 0, info.Length);
+                fileStream.Close();
+            }
+            string[] lines = File.ReadAllLines(path);
+            _logger.Info($"Successfully load paths of all windows");
+            return lines;
+        }
+
+        public static void SaveDialogWindowInformation(string firstPath, string secondPath)
+        {
+            string path = $"{projectPath}\\load.txt";
+            string text = $"{firstPath}\n{secondPath}";
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine(text);
+            }
+            _logger.Info($"Successfully saved paths of all windows");
         }
     }
 }
