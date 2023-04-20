@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileManager"
         mc:Ignorable="d"
-        Title="File Manager (x64) v0.5" Height="800" Width="1100"
+        Title="File Manager (x64) v0.6" Height="800" Width="1100"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Icon="FileManagerLogo.ico" 
@@ -39,7 +39,7 @@
         <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,0,0" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" HorizontalAlignment="Left" Width="510" Height="600" VerticalAlignment="Top" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name"></GridViewColumn>
+                    <GridViewColumn Header="Name" Width="200"></GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.ItemContainerStyle>
@@ -52,7 +52,7 @@
         <ListView x:Name="SecondWindowOnFileManager" Margin="559,110,0,0" MouseRightButtonDown="SecondWindowOnFileManager_MouseRightButtonDown" Height="600" VerticalAlignment="Top" HorizontalAlignment="Left" Width="510">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name"></GridViewColumn>
+                    <GridViewColumn Header="Name" Width="200"></GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.ItemContainerStyle>
@@ -178,7 +178,7 @@
                 <ToolTip>Create Txt File</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="OpenInCMDFirstWindow" Content="CMD" HorizontalAlignment="Left" Margin="104,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenInCMDFirstWindow_Click" Background="White" BorderBrush="White">
+        <Button x:Name="OpenCMD" Content="CMD" HorizontalAlignment="Left" Margin="104,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenCMD_Click" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\CMDIcon.png"/>
@@ -258,6 +258,26 @@
             </Button.ContentTemplate>
             <Button.ToolTip>
                 <ToolTip>Copy only files</ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <Button x:Name="OpenCMDInFirstWindow" Content="Button" HorizontalAlignment="Left" Margin="401,715,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenCMDInFirstWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\CMDIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+            <Button.ToolTip>
+                <ToolTip>Open path on first window in CMD</ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <Button x:Name="OpenCMDInSecondWindow" Content="Button" HorizontalAlignment="Left" Margin="939,715,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenCMDInSecondWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
+            <Button.ContentTemplate>
+                <DataTemplate>
+                    <Image Source="Images\CMDIcon.png"/>
+                </DataTemplate>
+            </Button.ContentTemplate>
+            <Button.ToolTip>
+                <ToolTip>Open path on second window in CMD</ToolTip>
             </Button.ToolTip>
         </Button>
 
