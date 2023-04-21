@@ -12,7 +12,7 @@ namespace FileManager.Include
 {
     public static class Function
     {      
-        public static string help = $"\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.6" +
+        public static string help = $"\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.7" +
             "\n\tВсе кнопки на интерфейсе заменены соответствующими значками, при наведении на кнопку, будет написано ее название." +
             "\nСоздание папок и файлов: " +
             "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
@@ -91,16 +91,22 @@ namespace FileManager.Include
 
         public static void Remove(string path, ListView listView, TextBox textBox, bool isFile)
         {
-            var result = MessageBox.Show("Внимание: программа удалит папку в которой вы находитесь и все ее содержимое!", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
-            if (result == MessageBoxResult.Yes)
+            try
             {
-                Directory.Delete(path, true);
-                listView.Items.Remove(listView.SelectedItem);
-                goBack(isFile, textBox);
-                _logger.Info("Delete folder success");
+                var result = MessageBox.Show("Внимание: программа удалит папку в которой вы находитесь и все ее содержимое!", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Directory.Delete(path, true);
+                    listView.Items.Remove(listView.SelectedItem);
+                    goBack(isFile, textBox);
+                    _logger.Info("Delete folder success");
+                }
+                else
+                    _logger.Info("Folder not deleted");
+            }catch (Exception ex)
+            {
+                _logger.Error($"Error remove. Error message: {ex.Message}");
             }
-            else
-                _logger.Info("Folder not deleted");
         }
 
         public static string ViewDirectoryAndFileOnWindow(bool isWindowFile, string path, string selectedItemName, ListView listView, ComboBox comboBox, TextBox textBox, Label freeSpace, Label formatDrive, Label typeDrive)
