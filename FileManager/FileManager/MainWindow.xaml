@@ -21,7 +21,7 @@
                 <ToolTip>Back</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Label x:Name="ExitLabel" Content="Alt + F4 Exit" Margin="939,735,0,0" VerticalAlignment="Top" MouseLeftButtonDown="ExitLabel_MouseLeftButtonDown" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="134">
+        <Label x:Name="ExitLabel" Content="Alt + F4 Exit" Margin="960,735,10,0" VerticalAlignment="Top" MouseLeftButtonDown="ExitLabel_MouseLeftButtonDown" HorizontalContentAlignment="Center">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -293,7 +293,7 @@
 
 
 
-        <Label Content="F5 Update" HorizontalAlignment="Left" Margin="10,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="UpdateLabel_MouseLeftButtonDown">
+        <Label Content="F5 Update" Margin="285,735,685,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseLeftButtonDown="UpdateLabel_MouseLeftButtonDown">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -304,7 +304,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Label Content="F6 Reset" HorizontalAlignment="Left" Margin="165,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="ResetLabel_MouseLeftButtonDown">
+        <Label Content="F6 Reset" Margin="420,735,550,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseLeftButtonDown="ResetLabel_MouseLeftButtonDown">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -315,7 +315,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Label Content="F7 Copy" HorizontalAlignment="Left" Margin="320,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="CopyLabel_MouseLeftButtonDown">
+        <Label Content="F7 Copy" Margin="555,735,415,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseLeftButtonDown="CopyLabel_MouseLeftButtonDown">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -326,7 +326,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Label Content="F8 CMD" HorizontalAlignment="Center" Margin="0,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="CMDLabel_MouseLeftButtonDown">
+        <Label Content="F8 CMD" Margin="690,735,280,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseLeftButtonDown="CMDLabel_MouseLeftButtonDown">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -337,7 +337,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Label Content="F9 Notepad" HorizontalAlignment="Left" Margin="629,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="NotepadLabel_MouseLeftButtonDown">
+        <Label Content="F9 Notepad" Margin="825,735,145,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseLeftButtonDown="NotepadLabel_MouseLeftButtonDown">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>
@@ -348,7 +348,18 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Label Content="F10 Help" HorizontalAlignment="Left" Margin="784,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="HelpLabel_MouseLeftButtonDown">
+        <Label Content="F4 Help" Margin="150,735,820,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseLeftButtonDown="HelpLabel_MouseLeftButtonDown">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Content="F3 Reboot" Margin="15,735,955,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseLeftButtonDown="RebootLabel_MouseLeftButtonDown">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>

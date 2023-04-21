@@ -3,7 +3,6 @@ using NLog;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,7 +19,7 @@ namespace FileManager
                 FirstDiskList.Items.Add(disk);
                 SecondDiskList.Items.Add(disk);
             }
-            _logger.Info($"File Manager (x64) v0.6 running. Time: {DateTime.Now}");
+            _logger.Info($"File Manager (x64) v0.7 running. Time: {DateTime.Now}");
             KeyDown += new KeyEventHandler(MainWindowKeyDown);
 
             _firstFilePath = Function.ViewDirectoryAndFileOnWindow(isFirstWindowFile, Function.LoadDialogWindowInformation()[0], _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstDiskList, FirstTextPath, FirstFreeSpace, FirstFormatDrive, FirstTypeDrive);
@@ -394,6 +393,11 @@ namespace FileManager
 
         private void MainWindowKeyDown(object sender, KeyEventArgs e)
         {
+            _logger.Info($"Press button {e.Key}");
+            if (e.Key == Key.F3)
+                RebootLabel_MouseLeftButtonDown(null, null);
+            if (e.Key == Key.F4)
+                HelpButton_Click(null, null);
             if (e.Key == Key.F5)
                 UpdateButton_Click(null, null);
             if (e.Key == Key.F6)
@@ -404,9 +408,6 @@ namespace FileManager
                 OpenCMD_Click(null, null);
             if (e.Key == Key.F9)
                 NotepadButton_Click(null, null);
-            if (e.Key == Key.F10)
-                HelpLabel_MouseLeftButtonDown(null,null);
-            _logger.Info($"Press button {e.Key}");
         }
 
         private void UpdateLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -436,7 +437,15 @@ namespace FileManager
 
         private void HelpLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Function.Help();
+            HelpButton_Click(null,null);
+        }
+
+        private void RebootLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _logger.Info("Restart app");
+            string appName = Process.GetCurrentProcess().ProcessName + ".exe";
+            Process.Start(appName);
+            Process.GetCurrentProcess().Kill();
         }
 
         private void FirstWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
