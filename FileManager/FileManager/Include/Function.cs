@@ -530,27 +530,29 @@ namespace FileManager.Include
         {
             string path = $"{projectPath}\\load.txt";
             string userName = Environment.UserName;
-            if (!File.Exists($"{path}"))
+            if (!File.Exists(path))
             {
-                FileStream fileStream = File.Create($"{path}");
-                byte[] info = new UTF8Encoding(true).GetBytes($"C:\\Users\\{userName}\nC:\\Users\\{userName}");
-                fileStream.Write(info, 0, info.Length);
-                fileStream.Close();
+                using (FileStream fileStream = File.Create(path))
+                {
+                    byte[] info = new UTF8Encoding(true).GetBytes($"C:\\Users\\{userName}\nC:\\Users\\{userName}");
+                    fileStream.Write(info, 0, info.Length);
+                }
             }
             string[] lines = File.ReadAllLines(path);
             _logger.Info($"Successfully load paths of all windows");
             return lines;
         }
 
-        public static void SaveDialogWindowInformation(string firstPath, string secondPath)
+        public static void SaveDialogWindowInformation(params string[] paths)
         {
-            string path = $"{projectPath}\\load.txt";
-            string text = $"{firstPath}\n{secondPath}";
-            using (StreamWriter sw = new StreamWriter(path))
+            string path = Path.Combine(projectPath, "load.txt");
+            StringBuilder sb = new StringBuilder();
+            foreach (string p in paths)
             {
-                sw.WriteLine(text);
+                sb.AppendLine(p);
             }
-            _logger.Info($"Successfully saved paths of all windows");
+            File.WriteAllText(path, sb.ToString(), Encoding.UTF8);
+            _logger.Info("Successfully saved paths of all windows");
         }
     }
 }
