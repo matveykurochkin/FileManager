@@ -21,6 +21,7 @@ namespace FileManager
                 SecondDiskList.Items.Add(disk);
             }
             _logger.Info($"File Manager (x64) v0.6 running. Time: {DateTime.Now}");
+            KeyDown += new KeyEventHandler(MainWindowKeyDown);
 
             _firstFilePath = Function.ViewDirectoryAndFileOnWindow(isFirstWindowFile, Function.LoadDialogWindowInformation()[0], _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstDiskList, FirstTextPath, FirstFreeSpace, FirstFormatDrive, FirstTypeDrive);
             _secondFilePath = Function.ViewDirectoryAndFileOnWindow(isSecondWindowFile, Function.LoadDialogWindowInformation()[1], _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondDiskList, SecondtTextPath, SecondFreeSpace, SecondFormatDrive, SecondTypeDrive);
@@ -389,6 +390,53 @@ namespace FileManager
                 UseShellExecute = false
             };
             Process.Start(processStartInfo);
+        }
+
+        private void MainWindowKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F5)
+                UpdateButton_Click(null, null);
+            if (e.Key == Key.F6)
+                ResetButton_Click(null, null);
+            if (e.Key == Key.F7)
+                CopyButton_Click(null, null);
+            if (e.Key == Key.F8)
+                OpenCMD_Click(null, null);
+            if (e.Key == Key.F9)
+                NotepadButton_Click(null, null);
+            if (e.Key == Key.F10)
+                HelpLabel_MouseLeftButtonDown(null,null);
+            _logger.Info($"Press button {e.Key}");
+        }
+
+        private void UpdateLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            UpdateButton_Click(null, null);
+        }
+
+        private void ResetLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ResetButton_Click(null, null);
+        }
+
+        private void CopyLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            CopyButton_Click(null, null);
+        }
+
+        private void CMDLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            OpenCMD_Click(null, null);
+        }
+
+        private void NotepadLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            NotepadButton_Click(null, null);
+        }
+
+        private void HelpLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Function.Help();
         }
 
         private void FirstWindowOnFileManager_MouseRightButtonDown(object sender, MouseButtonEventArgs e)

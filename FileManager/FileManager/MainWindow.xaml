@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileManager"
         mc:Ignorable="d"
-        Title="File Manager (x64) v0.6" Height="800" Width="1100"
+        Title="File Manager (x64) v0.7" Height="800" Width="1100"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Icon="FileManagerLogo.ico" 
         Closed="CloseMainWindow">
-    <Grid>
+    <Grid KeyDown="MainWindowKeyDown">
         <Button x:Name="FirstBackButton" Content="Back" HorizontalAlignment="Left" Margin="39,49,0,0" VerticalAlignment="Top" Height="29" Width="44" Click="FirstBackButton_Click" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
@@ -21,7 +21,17 @@
                 <ToolTip>Back</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Label x:Name="ExitLabel" Content="Alt + F4 Exit" HorizontalAlignment="Left" Margin="995,736,0,0" VerticalAlignment="Top" MouseLeftButtonDown="ExitLabel_MouseLeftButtonDown"/>
+        <Label x:Name="ExitLabel" Content="Alt + F4 Exit" Margin="939,735,0,0" VerticalAlignment="Top" MouseLeftButtonDown="ExitLabel_MouseLeftButtonDown" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="134">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
         <TextBox x:Name="FirstTextPath" HorizontalAlignment="Left" Margin="112,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="384" Height="22" KeyDown="EnterKeyDownOnFirstPath"/>
         <TextBox x:Name="SecondtTextPath" HorizontalAlignment="Left" Margin="650,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="384" Height="22" KeyDown="EnterKeyDownOnSecondPath"/>
         <Button x:Name="NotepadButton" Content="Notepad" HorizontalAlignment="Left" Margin="144,15,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="NotepadButton_Click" Background="White" BorderBrush="White">
@@ -36,7 +46,7 @@
         </Button>
         <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="22"/>
         <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="22"/>
-        <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,0,0" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" HorizontalAlignment="Left" Width="510" Height="600" VerticalAlignment="Top" >
+        <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,0,0" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" HorizontalAlignment="Left" Width="510" Height="585" VerticalAlignment="Top" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="200"></GridViewColumn>
@@ -49,7 +59,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <ListView x:Name="SecondWindowOnFileManager" Margin="559,110,0,0" MouseRightButtonDown="SecondWindowOnFileManager_MouseRightButtonDown" Height="600" VerticalAlignment="Top" HorizontalAlignment="Left" Width="510">
+        <ListView x:Name="SecondWindowOnFileManager" Margin="559,110,0,0" MouseRightButtonDown="SecondWindowOnFileManager_MouseRightButtonDown" Height="585" VerticalAlignment="Top" HorizontalAlignment="Left" Width="510">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="200"></GridViewColumn>
@@ -88,7 +98,7 @@
                 <ToolTip>Reset</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="AddFolderInFirstWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="21,715,0,0" VerticalAlignment="Top" Click="AddFolderInFirstWindow_Click" Width="45" Height="30" IsEnabled="False" Background="White" BorderBrush="White">
+        <Button x:Name="AddFolderInFirstWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="22,700,0,0" VerticalAlignment="Top" Click="AddFolderInFirstWindow_Click" Width="45" Height="30" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\FolderIcon.png"/>
@@ -98,7 +108,7 @@
                 <ToolTip>Create Folder</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="AddFolderInSecondWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="559,715,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="AddFolderInSecondWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
+        <Button x:Name="AddFolderInSecondWindow" Content="Add Folder" HorizontalAlignment="Left" Margin="559,700,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="AddFolderInSecondWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\FolderIcon.png"/>
@@ -108,7 +118,7 @@
                 <ToolTip>Create Folder</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="RemoveButtonOnFirstWindow" Content="Remove" HorizontalAlignment="Left" Margin="121,715,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="RemoveButtonOnFirstWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
+        <Button x:Name="RemoveButtonOnFirstWindow" Content="Remove" HorizontalAlignment="Left" Margin="121,700,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="RemoveButtonOnFirstWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\RecycleBinIcon.png"/>
@@ -118,7 +128,7 @@
                 <ToolTip>Remove Folder</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="RemoveButtonOnSecondWindow" Content="Remove" HorizontalAlignment="Left" Margin="659,715,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="RemoveButtonOnSecondWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
+        <Button x:Name="RemoveButtonOnSecondWindow" Content="Remove" HorizontalAlignment="Left" Margin="659,700,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="RemoveButtonOnSecondWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\RecycleBinIcon.png"/>
@@ -158,7 +168,7 @@
                 <ToolTip>Copying from first window to second window</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="CreateFileInFirstWindowButton" Content="New File" HorizontalAlignment="Left" Margin="71,715,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="CreateFileInFirstWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
+        <Button x:Name="CreateFileInFirstWindowButton" Content="New File" HorizontalAlignment="Left" Margin="71,700,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="CreateFileInFirstWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\FileIcon.png"/>
@@ -168,7 +178,7 @@
                 <ToolTip>Create Txt File</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="CreateFileInSecondWindowButton" Content="New File" HorizontalAlignment="Left" Margin="609,715,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="CreateFileInSecondWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White" >
+        <Button x:Name="CreateFileInSecondWindowButton" Content="New File" HorizontalAlignment="Left" Margin="609,700,0,0" VerticalAlignment="Top" Width="45" Height="30" Click="CreateFileInSecondWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White" >
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\FileIcon.png"/>
@@ -208,8 +218,8 @@
                 <ToolTip>Help</ToolTip>
             </Button.ToolTip>
         </Button>
-        <TextBox x:Name="SearchInFirstWindow" HorizontalAlignment="Left" Margin="171,715,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Height="30" KeyDown="EnterKeyDownSearchInFirstWindow" IsEnabled="False" FontSize="16"/>
-        <Button x:Name="SearchInFirstWindowButton" Content="Search" HorizontalAlignment="Left" Margin="361,715,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="SearchInFirstWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
+        <TextBox x:Name="SearchInFirstWindow" HorizontalAlignment="Left" Margin="171,700,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Height="30" KeyDown="EnterKeyDownSearchInFirstWindow" IsEnabled="False" FontSize="16"/>
+        <Button x:Name="SearchInFirstWindowButton" Content="Search" HorizontalAlignment="Left" Margin="361,700,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="SearchInFirstWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\MagnifierIcon.png"/>
@@ -219,8 +229,8 @@
                 <ToolTip>Search</ToolTip>
             </Button.ToolTip>
         </Button>
-        <TextBox x:Name="SearchInSecondWindow" HorizontalAlignment="Left" Margin="709,715,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Width="185" Height="30" KeyDown="EnterKeyDownSearchInSecondWindow" IsEnabled="False" FontSize="16"/>
-        <Button x:Name="SearchInSecondWindowButton" Content="Search" HorizontalAlignment="Left" Margin="899,715,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="SearchInSecondWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
+        <TextBox x:Name="SearchInSecondWindow" HorizontalAlignment="Left" Margin="709,700,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Width="185" Height="30" KeyDown="EnterKeyDownSearchInSecondWindow" IsEnabled="False" FontSize="16"/>
+        <Button x:Name="SearchInSecondWindowButton" Content="Search" HorizontalAlignment="Left" Margin="899,700,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="SearchInSecondWindowButton_Click" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\MagnifierIcon.png"/>
@@ -260,7 +270,7 @@
                 <ToolTip>Copy only files</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="OpenCMDInFirstWindow" Content="Button" HorizontalAlignment="Left" Margin="401,715,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenCMDInFirstWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
+        <Button x:Name="OpenCMDInFirstWindow" Content="Button" HorizontalAlignment="Left" Margin="401,700,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenCMDInFirstWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\CMDIcon.png"/>
@@ -270,7 +280,7 @@
                 <ToolTip>Open path on first window in CMD</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button x:Name="OpenCMDInSecondWindow" Content="Button" HorizontalAlignment="Left" Margin="939,715,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenCMDInSecondWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
+        <Button x:Name="OpenCMDInSecondWindow" Content="Button" HorizontalAlignment="Left" Margin="939,700,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="OpenCMDInSecondWindow_Click" IsEnabled="False" Background="White" BorderBrush="White">
             <Button.ContentTemplate>
                 <DataTemplate>
                     <Image Source="Images\CMDIcon.png"/>
@@ -280,6 +290,75 @@
                 <ToolTip>Open path on second window in CMD</ToolTip>
             </Button.ToolTip>
         </Button>
+
+
+
+        <Label Content="F5 Update" HorizontalAlignment="Left" Margin="10,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="UpdateLabel_MouseLeftButtonDown">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Content="F6 Reset" HorizontalAlignment="Left" Margin="165,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="ResetLabel_MouseLeftButtonDown">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Content="F7 Copy" HorizontalAlignment="Left" Margin="320,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="CopyLabel_MouseLeftButtonDown">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Content="F8 CMD" HorizontalAlignment="Center" Margin="0,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="CMDLabel_MouseLeftButtonDown">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Content="F9 Notepad" HorizontalAlignment="Left" Margin="629,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="NotepadLabel_MouseLeftButtonDown">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <Label Content="F10 Help" HorizontalAlignment="Left" Margin="784,735,0,0" VerticalAlignment="Top" Width="150" HorizontalContentAlignment="Center" MouseLeftButtonDown="HelpLabel_MouseLeftButtonDown">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
 
     </Grid>
 </Window>
