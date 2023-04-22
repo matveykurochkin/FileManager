@@ -19,7 +19,7 @@ namespace FileManager
                 FirstDiskList.Items.Add(disk);
                 SecondDiskList.Items.Add(disk);
             }
-            _logger.Info($"File Manager (x64) v0.7 running. Time: {DateTime.Now}");
+            _logger.Info($"File Manager (x64) v0.7.1 running. Time: {DateTime.Now}");
             KeyDown += new KeyEventHandler(MainWindowKeyDown);
 
             _firstFilePath = Function.ViewDirectoryAndFileOnWindow(isFirstWindowFile, Function.LoadDialogWindowInformation()[0], _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstDiskList, FirstTextPath, FirstFreeSpace, FirstFormatDrive, FirstTypeDrive);
