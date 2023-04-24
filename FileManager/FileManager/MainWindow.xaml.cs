@@ -1,6 +1,7 @@
 ﻿using FileManager.Include;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -355,7 +356,7 @@ namespace FileManager
         {
             _logger.Info("Close main window and close all window");
             Function.SaveDialogWindowInformation(_firstFilePath, _secondFilePath);
-            foreach (Window window in App.Current.Windows)
+            foreach (Window window in Application.Current.Windows)
                 window.Close();
         }
 
@@ -393,21 +394,22 @@ namespace FileManager
 
         private void MainWindowKeyDown(object sender, KeyEventArgs e)
         {
-            _logger.Info($"Press button {e.Key}");
-            if (e.Key == Key.F3)
-                RebootLabel_MouseLeftButtonDown(null, null);
-            if (e.Key == Key.F4)
-                HelpButton_Click(null, null);
-            if (e.Key == Key.F5)
-                UpdateButton_Click(null, null);
-            if (e.Key == Key.F6)
-                ResetButton_Click(null, null);
-            if (e.Key == Key.F7)
-                CopyButton_Click(null, null);
-            if (e.Key == Key.F8)
-                OpenCMD_Click(null, null);
-            if (e.Key == Key.F9)
-                NotepadButton_Click(null, null);
+            Dictionary<Key, Action> actions = new Dictionary<Key, Action>()
+                    {
+                        { Key.F3, () => RebootLabel_MouseLeftButtonDown(null, null) },
+                        { Key.F4, () => HelpButton_Click(null, null) },
+                        { Key.F5, () => UpdateButton_Click(null, null) },
+                        { Key.F6, () => ResetButton_Click(null, null) },
+                        { Key.F7, () => CopyButton_Click(null, null) },
+                        { Key.F8, () => OpenCMD_Click(null, null) },
+                        { Key.F9, () => NotepadButton_Click(null, null) }
+                    };
+
+            if (actions.ContainsKey(e.Key))
+            {
+                _logger.Info($"Press button {e.Key}");
+                actions[e.Key].Invoke();
+            }
         }
 
         private void UpdateLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -437,7 +439,7 @@ namespace FileManager
 
         private void HelpLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            HelpButton_Click(null,null);
+            HelpButton_Click(null, null);
         }
 
         private void RebootLabel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
