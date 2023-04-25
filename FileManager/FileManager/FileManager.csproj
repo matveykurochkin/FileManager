@@ -96,6 +96,7 @@
       <DependentUpon>Create.xaml</DependentUpon>
     </Compile>
     <Compile Include="Include\Function.cs" />
+    <Compile Include="Include\UserHelp.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

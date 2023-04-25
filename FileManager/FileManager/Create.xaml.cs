@@ -2,6 +2,7 @@
 using NLog;
 using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace FileManager
 {
@@ -10,7 +11,7 @@ namespace FileManager
         public Create()
         {
             InitializeComponent();
-            _logger.Info($"Creation Menu running. Time: {DateTime.Now}");
+            _logger.Info($"Creation Menu v0.7.2 running. Time: {DateTime.Now}");
         }
 
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
@@ -61,6 +62,15 @@ namespace FileManager
             }
             else
                 _logger.Error("Click button add MS Power Point document on Creation menu, process not success. Error: MS Power Point document name not specified");
+        }
+
+        private void EnterKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                _logger.Info("Press enter on input panel on creation menu");
+                AddFolderButton_Click(null, null);
+            }
         }
     }
 }

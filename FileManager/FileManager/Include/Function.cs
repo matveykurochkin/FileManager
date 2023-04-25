@@ -4,50 +4,19 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace FileManager.Include
 {
     public static class Function
-    {      
-        public static string help = $"\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.7.1" +
-            "\n\tВсе кнопки на интерфейсе заменены соответствующими значками, при наведении на кнопку, будет написано ее название." +
-            "\nСоздание папок и файлов: " +
-            "\n\tДля создания папки по умолчанию требуется перейти в нужный каталог и нажать кнопку New Folder!" +
-            "\n\tДля создания файла по умолчанию требуется перейти в нужный каталог и нажать кнопку New File!" +
-            "\n\tДля создания папки или файла с собственным именем нажать ПКМ и в окне ввести название!" +
-            "\nКопирование папок:" +
-            "\n\tДля копирования папки необходимо в левом окне выбрать папку, необходимую для копирования, а в правом окне папку, в которую нужно скопировать данные, после нажать кнопку Copy!" +
-            "\nУдаление папок:" +
-            "\n\tДля копирования только файлов:" +
-            "\nЧтобы скопировать только файлы из текущей папки в папку, необходимую для копирования, нужно нажать на кнопку Copy Files! (в левом окне папка откуда копировать, в правом куда)" +
-            "\n\tДля удаления папок необходимо зайти в папку которую нужно удалить и нажать кнопку Remove, после чего папка и все ее содержимое безвозвратно удалится!" +
-            "\nОбновление данных:" +
-            "\n\tЕсли файлы были добавлены через другое приложение, то следует нажать кнопку Update!" +
-            "\nСброс всех окон и их данных:" +
-            "\n\tЧтобы сбросить все окна до состояния по умолчанию, необходимо нажать кнопку Reset!" +
-            "\nКопирование пути:" +
-            "\n\tДля того, чтобы скопировать путь необходимо перейти в нужный каталог и нажать кнопку Copy в зависимости от того, в каком окне вы находитесь!" +
-            "\nДля перехода по скопированному пути:" +
-            "\n\tДля того, чтобы перейти по скопированному пути, нужно вставить путь в одно из полей, где располагается путь и нажать Enter или на кнопку Next!" +
-            "\nОткрытие Блокнота:" +
-            "\n\tДля того, чтобы откыть блокнот, необходимо нажать кнопку Notepad!" +
-            "\nДля открытия CMD:" +
-            "\n\tДля того, чтобы открыть CMD, необходимо нажать кнопку CMD!" +
-            "\nФайловый менеджер предоставляет информацию о памяти текущего диска, его файловой системы и названия, также показывает скрытые папки!" +
-            "\n\tДля поиска файлов или директорий:" +
-            "\nЧтобы найти нужный файл или папку, необходимо выбрать папку в которой нужно искать этот файл или папку (нельзя искать в корне диска, потому что" +
-            "\nтам могут находится папки к которым у приложения нет доступа, что приведет к отрицательным результатам поиска), поиск требует точного названия файла (с расширением) " +
-            "\nили папки, к регистру не чувствителен!";
-
+    {
         public static string MSWord = "docx", MSPP = "ppt";
         public static string pathOnTCWindow = "", selectedonTCItemName = "";
         public static bool isFileTCwindow;
         static ListView listViewOnTC = new ListView();
         static TextBox textBoxOnTC = new TextBox();
-        static Thread thread;
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         static string[] Drives = Environment.GetLogicalDrives();
         private static string projectPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -103,7 +72,8 @@ namespace FileManager.Include
                 }
                 else
                     _logger.Info("Folder not deleted");
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.Error($"Error remove. Error message: {ex.Message}");
             }
@@ -175,23 +145,26 @@ namespace FileManager.Include
             }
             listView.Items.Refresh();
         }
-        public static void AddFolder(string path)
+        public async static void AddFolder(string path)
         {
             try
             {
                 string pathString = Path.Combine(path, "New Folder");
-                if (Directory.Exists(pathString))
+                await Task.Run(() =>
                 {
-                    var result = MessageBox.Show("Папка с таким названием уже существует, заменить ее?",
-                        "Информация",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Information);
-                    if (result == MessageBoxResult.Yes)
-                        Directory.Delete(pathString, true);
-                    else
-                        return;
-                }
-                Directory.CreateDirectory(pathString);
+                    if (Directory.Exists(pathString))
+                    {
+                        var result = MessageBox.Show("Папка с таким названием уже существует, заменить ее?",
+                            "Информация",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Information);
+                        if (result == MessageBoxResult.Yes)
+                            Directory.Delete(pathString, true);
+                        else
+                            return;
+                    }
+                    Directory.CreateDirectory(pathString);
+                });
                 _logger.Info($"Folder create successfully. Folder name: New Folder. Folder path: {pathString}");
             }
             catch (Exception ex)
@@ -200,25 +173,29 @@ namespace FileManager.Include
             }
         }
 
-        public static void AddFolder(string path, string folderName)
+        public async static void AddFolder(string path, string folderName)
         {
             try
             {
                 string pathString = Path.Combine(path, folderName);
-                if (Directory.Exists(pathString))
+                await Task.Run(() =>
                 {
-                    var result = MessageBox.Show("Папка с таким названием уже существует, заменить ее?",
-                        "Информация",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Information);
-                    if (result == MessageBoxResult.Yes)
-                        Directory.Delete(pathString, true);
-                    else
-                        return;
-                }
-                Directory.CreateDirectory(pathString);
+                    if (Directory.Exists(pathString))
+                    {
+                        var result = MessageBox.Show("Папка с таким названием уже существует, заменить ее?",
+                            "Информация",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Information);
+                        if (result == MessageBoxResult.Yes)
+                            Directory.Delete(pathString, true);
+                        else
+                            return;
+                    }
+                    Directory.CreateDirectory(pathString);
+                });
                 LoadUpdate(isFileTCwindow, pathOnTCWindow, selectedonTCItemName, listViewOnTC, textBoxOnTC);
                 _logger.Info($"Folder create successfully. Folder name: {folderName}. Folder path: {pathString}");
+
             }
             catch (Exception ex)
             {
@@ -478,29 +455,29 @@ namespace FileManager.Include
             }
             return null;
         }
-        public static void Help()
+        public async static void Help()
         {
 
             try
             {
-                thread = new Thread(() =>
+                await Task.Run(() =>
                 {
                     string userName = Environment.UserName;
-
                     string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
+
                     _logger.Info($"Help file path: {path}");
 
                     if (File.Exists($"{path}"))
                         File.Delete(path);
 
                     FileStream fileStream = File.Create($"{path}");
-                    byte[] info = new UTF8Encoding(true).GetBytes(help);
+                    byte[] info = new UTF8Encoding(true).GetBytes(UserHelp.help);
                     fileStream.Write(info, 0, info.Length);
                     fileStream.Close();
 
                     Process.Start("notepad.exe", path);
-                });
-                thread.Start();
+                }
+                );
             }
             catch (Exception ex)
             {
