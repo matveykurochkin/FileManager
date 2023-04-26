@@ -440,9 +440,14 @@ namespace FileManager
 
         private void MainWindowKeyUp(object sender, KeyEventArgs e)
         {
-            if (_timers[e.Key] != null && _timers[e.Key].IsEnabled)
+            try
             {
-                _timers[e.Key].Stop();
+                if (_timers[e.Key] != null && _timers[e.Key].IsEnabled)
+                    _timers[e.Key].Stop();
+            }
+            catch (Exception ex)
+            {
+                _logger.Info($"This button is not a quick command. Message catch block: {ex.Message}");
             }
         }
 
