@@ -46,7 +46,7 @@
         </Button>
         <ComboBox x:Name="FirstDiskList" HorizontalAlignment="Left" Margin="21,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="FirstDiskList_SelectionChanged" Height="22"/>
         <ComboBox x:Name="SecondDiskList" HorizontalAlignment="Left" Margin="559,83,0,0" VerticalAlignment="Top" Width="86" SelectionChanged="SecondDiskList_SelectionChanged" Height="22"/>
-        <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,0,0" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" HorizontalAlignment="Left" Width="510" Height="585" VerticalAlignment="Top" >
+        <ListView x:Name="FirstWindowOnFileManager" Margin="21,110,0,0" MouseRightButtonDown="FirstWindowOnFileManager_MouseRightButtonDown" HorizontalAlignment="Left" Width="510" Height="554" VerticalAlignment="Top" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="200"></GridViewColumn>
@@ -59,7 +59,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <ListView x:Name="SecondWindowOnFileManager" Margin="559,110,0,0" MouseRightButtonDown="SecondWindowOnFileManager_MouseRightButtonDown" Height="585" VerticalAlignment="Top" HorizontalAlignment="Left" Width="510">
+        <ListView x:Name="SecondWindowOnFileManager" Margin="559,110,0,0" MouseRightButtonDown="SecondWindowOnFileManager_MouseRightButtonDown" Height="554" VerticalAlignment="Top" HorizontalAlignment="Left" Width="510">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="200"></GridViewColumn>
@@ -370,6 +370,8 @@
                 </Style>
             </Label.Style>
         </Label>
+        <Label x:Name="InfoDirectoryFirstWindow" Content="" HorizontalAlignment="Left" Margin="23,669,0,0" VerticalAlignment="Top" Width="508"/>
+        <Label x:Name="InfoDirectorySecondWindow" Content="" HorizontalAlignment="Left" Margin="561,669,0,0" VerticalAlignment="Top" Width="508"/>
 
     </Grid>
 </Window>
