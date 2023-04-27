@@ -109,6 +109,35 @@ namespace FileManager.Include
             _logger.Info("Files and Directories view successfully");
             return path;
         }
+
+        public static void LoadInfoDirectory(string path, Label label)
+        {
+            try
+            {
+                int filesCount = Directory.GetFiles(path).Length;
+                int dirsCount = Directory.GetDirectories(path).Length;
+
+                DirectoryInfo directoryInfo = new DirectoryInfo(path);
+
+                long directorySize = 0;
+                FileInfo[] files = directoryInfo.GetFiles();
+
+                foreach (FileInfo file in files)
+                    directorySize += file.Length;
+
+                if (filesCount == 0)
+                    label.Content = $"{filesCount} file(s), {dirsCount} dir(s)";
+                else
+                    label.Content = $"{(directorySize / 1024).ToString("#,#", new CultureInfo("ru-RU"))} k in {filesCount} file(s), {dirsCount} dir(s)";
+
+                _logger.Info("Load Info Directory view successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Load Info Directory view not successfully. Error message: {ex.Message}");
+            }
+        }
+
         public static void LoadFilesAndDirectories(bool isFile, string filePath, string selectedItemName, ListView listView)
         {
             DirectoryInfo fileList;
@@ -463,7 +492,7 @@ namespace FileManager.Include
                 await Task.Run(() =>
                 {
                     string userName = Environment.UserName;
-                    string path = $"C:\\Users\\{userName}\\Downloads\\Help.txt";
+                    string path = $"C:\\Users\\{userName}\\Downloads\\User Guide.txt";
 
                     _logger.Info($"Help file path: {path}");
 
