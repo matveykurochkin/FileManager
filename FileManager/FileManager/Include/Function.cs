@@ -17,6 +17,7 @@ namespace FileManager.Include
         public static bool isFileTCwindow;
         static ListView listViewOnTC = new ListView();
         static TextBox textBoxOnTC = new TextBox();
+        public static Label labelOnTC = new Label();
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         static string[] Drives = Environment.GetLogicalDrives();
         private static string projectPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -127,6 +128,8 @@ namespace FileManager.Include
 
                 if (filesCount == 0)
                     label.Content = $"{filesCount} file(s), {dirsCount} dir(s)";
+                else if(directorySize / 1024 < 1)
+                    label.Content = $"{(directorySize % 1024).ToString("#,#", new CultureInfo("ru-RU"))} b in {filesCount} file(s), {dirsCount} dir(s)";
                 else
                     label.Content = $"{(directorySize / 1024).ToString("#,#", new CultureInfo("ru-RU"))} k in {filesCount} file(s), {dirsCount} dir(s)";
 
@@ -318,7 +321,7 @@ namespace FileManager.Include
             }
         }
 
-        public static void CreationMenuView(bool isFile, string path, string selectedItemName, ListView listView, TextBox textBox)
+        public static void CreationMenuView(bool isFile, string path, string selectedItemName, ListView listView, TextBox textBox, Label label)
         {
             bool isWindowOpen = false;
 
@@ -342,6 +345,7 @@ namespace FileManager.Include
                     isFileTCwindow = isFile;
                     listViewOnTC = listView;
                     textBoxOnTC = textBox;
+                    labelOnTC = label;
                     create.Show();
                     _logger.Info("Creation Menu loaded");
                 }

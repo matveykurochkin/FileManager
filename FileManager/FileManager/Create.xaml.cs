@@ -22,6 +22,7 @@ namespace FileManager
             {
                 _logger.Info("Click button add folder on Creation menu, process success");
                 Function.AddFolder(Function.pathOnTCWindow, NameOfFileOrFolder.Text);
+                Function.LoadInfoDirectory(Function.pathOnTCWindow, Function.labelOnTC);
                 Close();
             }
             else
@@ -34,6 +35,7 @@ namespace FileManager
             {
                 _logger.Info("Click button add file on Creation menu, process success");
                 Function.AddFile(Function.pathOnTCWindow, NameOfFileOrFolder.Text);
+                Function.LoadInfoDirectory(Function.pathOnTCWindow, Function.labelOnTC);
                 Close();
             }
             else
@@ -46,6 +48,7 @@ namespace FileManager
             {
                 _logger.Info("Click button add MS Word document on Creation menu, process success");
                 Function.AddFile(Function.pathOnTCWindow, NameOfFileOrFolder.Text, Function.MSWord);
+                Function.LoadInfoDirectory(Function.pathOnTCWindow, Function.labelOnTC);
                 Close();
             }
             else
@@ -58,6 +61,7 @@ namespace FileManager
             {
                 _logger.Info("Click button add MS Power Point document on Creation menu, process success");
                 Function.AddFile(Function.pathOnTCWindow, NameOfFileOrFolder.Text, Function.MSPP);
+                Function.LoadInfoDirectory(Function.pathOnTCWindow, Function.labelOnTC);
                 Close();
             }
             else
