@@ -428,6 +428,13 @@ namespace FileManager
 
         private void MainWindowKeyDown(object sender, KeyEventArgs e)
         {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.S))
+            {
+                _logger.Info($"Press buttons L. Ctrl + S");
+                Function.SaveDialogWindowInformation();
+                return;
+            }
+
             Dictionary<Key, Action> actions = new Dictionary<Key, Action>()
             {
                 { Key.F3, () => RebootLabel_MouseLeftButtonDown(null, null) },

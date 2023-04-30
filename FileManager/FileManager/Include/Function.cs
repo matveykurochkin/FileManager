@@ -128,7 +128,7 @@ namespace FileManager.Include
 
                 if (filesCount == 0)
                     label.Content = $"{filesCount} file(s), {dirsCount} dir(s)";
-                else if(directorySize / 1024 < 1)
+                else if (directorySize / 1024 < 1)
                     label.Content = $"{(directorySize % 1024).ToString("#,#", new CultureInfo("ru-RU"))} b in {filesCount} file(s), {dirsCount} dir(s)";
                 else
                     label.Content = $"{(directorySize / 1024).ToString("#,#", new CultureInfo("ru-RU"))} k in {filesCount} file(s), {dirsCount} dir(s)";
