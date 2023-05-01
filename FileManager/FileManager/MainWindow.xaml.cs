@@ -75,7 +75,7 @@ namespace FileManager
         private void FirstBackButton_Click(object sender, RoutedEventArgs e)
         {
             _logger.Info("Back Button click on first window");
-            Function.goBack(isFirstWindowFile, FirstTextPath);
+            Function.Back(FirstTextPath);
             _firstFolderPath = Function.LoadUpdate(isFirstWindowFile, _firstFolderPath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             Function.LoadInfoDirectory(_firstFolderPath, InfoDirectoryFirstWindow);
         }
@@ -83,7 +83,7 @@ namespace FileManager
         private void SecondBackButton_Click(object sender, RoutedEventArgs e)
         {
             _logger.Info("Back Button click on second window");
-            Function.goBack(isSecondWindowFile, SecondtTextPath);
+            Function.Back(SecondtTextPath);
             _secondFolderPath = Function.LoadUpdate(isSecondWindowFile, _secondFolderPath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
             Function.LoadInfoDirectory(_secondFolderPath, InfoDirectorySecondWindow);
         }
@@ -125,7 +125,7 @@ namespace FileManager
             Function.UpdateInfoDrive(SecondDiskList, SecondFreeSpace);
             _firstFolderPath = Function.LoadUpdate(isFirstWindowFile, _firstFolderPath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             _secondFolderPath = Function.LoadUpdate(isSecondWindowFile, _secondFolderPath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
-            Function.LoadInfoDirectory(_firstFolderPath,InfoDirectoryFirstWindow);
+            Function.LoadInfoDirectory(_firstFolderPath, InfoDirectoryFirstWindow);
             Function.LoadInfoDirectory(_secondFolderPath, InfoDirectorySecondWindow);
         }
 
@@ -148,7 +148,7 @@ namespace FileManager
         private void RemoveButtonOnFirstWindow_Click(object sender, RoutedEventArgs e)
         {
             _logger.Info("Click on remove folder on first window button");
-            Function.Remove(_firstFolderPath, FirstWindowOnFileManager, FirstTextPath, isFirstWindowFile);
+            Function.Remove(_firstFolderPath, FirstWindowOnFileManager, FirstTextPath);
             _firstFolderPath = Function.LoadUpdate(isFirstWindowFile, _firstFolderPath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             Function.LoadInfoDirectory(_firstFolderPath, InfoDirectoryFirstWindow);
         }
@@ -156,7 +156,7 @@ namespace FileManager
         private void RemoveButtonOnSecondWindow_Click(object sender, RoutedEventArgs e)
         {
             _logger.Info("Click on remove folder on second window button");
-            Function.Remove(_secondFolderPath, SecondWindowOnFileManager, SecondtTextPath, isSecondWindowFile);
+            Function.Remove(_secondFolderPath, SecondWindowOnFileManager, SecondtTextPath);
             _secondFolderPath = Function.LoadUpdate(isSecondWindowFile, _secondFolderPath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
             Function.LoadInfoDirectory(_secondFolderPath, InfoDirectorySecondWindow);
         }
@@ -207,7 +207,7 @@ namespace FileManager
             Function.CopyFileAndDerictories(_firstFolderPath, _secondFolderPath);
             _firstFolderPath = Function.LoadUpdate(isFirstWindowFile, _firstFolderPath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             _secondFolderPath = Function.LoadUpdate(isSecondWindowFile, _secondFolderPath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
-            Function.LoadInfoDirectory(_secondFolderPath,InfoDirectorySecondWindow);
+            Function.LoadInfoDirectory(_secondFolderPath, InfoDirectorySecondWindow);
         }
 
         private void FirstWindowOnFileManager_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -388,7 +388,7 @@ namespace FileManager
             Function.CopyFiles(_firstFolderPath, _secondFolderPath);
             _firstFolderPath = Function.LoadUpdate(isFirstWindowFile, _firstFolderPath, _currentlyFirstSelectedItemName, FirstWindowOnFileManager, FirstTextPath);
             _secondFolderPath = Function.LoadUpdate(isSecondWindowFile, _secondFolderPath, _currentlySecondSelectedItemName, SecondWindowOnFileManager, SecondtTextPath);
-            Function.LoadInfoDirectory(_secondFolderPath,InfoDirectorySecondWindow);
+            Function.LoadInfoDirectory(_secondFolderPath, InfoDirectorySecondWindow);
         }
 
         private void OpenCMDInFirstWindow_Click(object sender, RoutedEventArgs e)

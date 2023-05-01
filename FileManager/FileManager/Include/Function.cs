@@ -15,11 +15,11 @@ namespace FileManager.Include
         public static string MSWord = "docx", MSPP = "ppt";
         public static string pathOnTCWindow = "", selectedonTCItemName = "";
         public static bool isFileTCwindow;
-        static ListView listViewOnTC = new ListView();
-        static TextBox textBoxOnTC = new TextBox();
+        private static ListView listViewOnTC = new ListView();
+        private static TextBox textBoxOnTC = new TextBox();
         public static Label labelOnTC = new Label();
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
-        static string[] Drives = Environment.GetLogicalDrives();
+        private static string[] Drives = Environment.GetLogicalDrives();
         private static string projectPath = AppDomain.CurrentDomain.BaseDirectory;
 
         public static void CopyPath(string path)
@@ -34,23 +34,22 @@ namespace FileManager.Include
                 _logger.Error($"Command copy path to buffer not success. Error message: {ex.Message}");
             }
         }
-        public static void removeBackSlash(TextBox textBox)
+        private static void RemoveSlash(TextBox textBox)
         {
             string path = textBox.Text;
             if (path.LastIndexOf("\\") == path.Length - 1)
                 textBox.Text = path.Substring(0, path.Length - 1);
         }
 
-        public static void goBack(bool isFile, TextBox textBox)
+        public static void Back(TextBox textBox)
         {
             try
             {
-                removeBackSlash(textBox);
+                RemoveSlash(textBox);
                 string path = textBox.Text;
                 path = path.Substring(0, path.LastIndexOf("\\"));
-                isFile = false;
                 textBox.Text = path;
-                removeBackSlash(textBox);
+                RemoveSlash(textBox);
                 _logger.Info($"Go back button click success. Path: {path}");
             }
             catch (Exception ex)
@@ -59,7 +58,7 @@ namespace FileManager.Include
             }
         }
 
-        public static void Remove(string path, ListView listView, TextBox textBox, bool isFile)
+        public static void Remove(string path, ListView listView, TextBox textBox)
         {
             try
             {
@@ -68,7 +67,7 @@ namespace FileManager.Include
                 {
                     Directory.Delete(path, true);
                     listView.Items.Remove(listView.SelectedItem);
-                    goBack(isFile, textBox);
+                    Back(textBox);
                     _logger.Info("Delete folder success");
                 }
                 else
