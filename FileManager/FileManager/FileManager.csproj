@@ -95,8 +95,15 @@
     <Compile Include="Create.xaml.cs">
       <DependentUpon>Create.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Include\Function.cs" />
-    <Compile Include="Include\UserHelp.cs" />
+    <Compile Include="Functions\CopyFunction.cs" />
+    <Compile Include="Functions\CreateFunction.cs" />
+    <Compile Include="Functions\LoadFunction.cs" />
+    <Compile Include="Functions\RemoveFunction.cs" />
+    <Compile Include="Functions\SaveFunction.cs" />
+    <Compile Include="Functions\SearchFunction.cs" />
+    <Compile Include="Functions\UpdateFunction.cs" />
+    <Compile Include="Functions\HelpFunction.cs" />
+    <Compile Include="Functions\ViewFunction.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
