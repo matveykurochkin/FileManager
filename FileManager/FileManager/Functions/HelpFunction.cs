@@ -1,7 +1,16 @@
-﻿namespace FileManager.Include
+﻿using NLog;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FileManager.Include
 {
-    internal static class UserHelp
+    internal static class HelpFunction
     {
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public static readonly string help = $"\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.7.2" +
             "\n\t\t\t\t\t\tРусская версия" +
             "\n\tВсе кнопки на интерфейсе заменены соответствующими значками, при наведении на кнопку, будет написано ее название." +
@@ -80,5 +89,34 @@
             "\nTo find the necessary file or folder, you need to select the folder in which you want to search for this file or folder (you cannot search in the root of the disk because " +
             "\nthere may be folders to which the application does not have access, which will lead to negative search results). The search requires the exact name of the file (with extension) " +
             "\nor folder, and it is not case sensitive!";
+
+        public async static void Help()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    string userName = Environment.UserName;
+                    string path = $"C:\\Users\\{userName}\\Downloads\\User Guide.txt";
+
+                    _logger.Info($"Help file path: {path}");
+
+                    if (File.Exists($"{path}"))
+                        File.Delete(path);
+
+                    FileStream fileStream = File.Create($"{path}");
+                    byte[] info = new UTF8Encoding(true).GetBytes(help);
+                    fileStream.Write(info, 0, info.Length);
+                    fileStream.Close();
+
+                    Process.Start("notepad.exe", path);
+                }
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Help file not created. Error message: {ex.Message}");
+            }
+        }
     }
 }
