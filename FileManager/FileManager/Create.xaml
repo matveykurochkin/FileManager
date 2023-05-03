@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileManager"
         mc:Ignorable="d"
-        Title="Creation Menu v0.7.2" Height="150" Width="250"
+        Title="Creation Menu v0.8" Height="150" Width="250"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Icon="FileManagerLogo.ico">

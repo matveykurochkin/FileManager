@@ -11,7 +11,7 @@ namespace FileManager
         public Create()
         {
             InitializeComponent();
-            _logger.Info($"Creation Menu v0.7.2 running. Time: {DateTime.Now}");
+            _logger.Info($"Creation Menu v0.8 running. Time: {DateTime.Now}");
         }
 
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();

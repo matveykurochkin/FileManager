@@ -15,7 +15,6 @@ namespace FileManager.Include
         {
             try
             {
-
                 path = textBox.Text;
                 LoadFunction.LoadFilesAndDirectories(isFile, path, selectedItemName, listView);
                 isFile = false;
