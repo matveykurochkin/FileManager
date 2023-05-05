@@ -11,7 +11,7 @@ namespace FileManager.Include
     {
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        public static readonly string help = $"\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.7.2" +
+        public static readonly string help = $"\t\t\t\t\tРуководство пользователя Файлового менеджера. v0.8" +
             "\n\t\t\t\t\t\tРусская версия" +
             "\n\tВсе кнопки на интерфейсе заменены соответствующими значками, при наведении на кнопку, будет написано ее название." +
             "\nСоздание папок и файлов: " +
@@ -50,7 +50,7 @@ namespace FileManager.Include
             "\nЧтобы найти нужный файл или папку, необходимо выбрать папку в которой нужно искать этот файл или папку (нельзя искать в корне диска, потому что" +
             "\nтам могут находится папки к которым у приложения нет доступа, что приведет к отрицательным результатам поиска), поиск требует точного названия файла (с расширением) " +
             "\nили папки, к регистру не чувствителен!" +
-            "\n\t\t\t\t\tFile Manager User Guide. v0.7.2" +
+            "\n\t\t\t\t\tFile Manager User Guide. v0.8" +
             "\n\t\t\t\t\t\tEnglish Version" +
             "\n\tAll buttons on the interface have been replaced with corresponding icons. Hovering over a button will display its name." +
             "\nCreating Folders and Files:" +
